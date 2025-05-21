@@ -25,9 +25,6 @@ public class LeTanDTO implements Serializable {
     @NotBlank(message = "Địa chỉ không được để trống")
     private String diaChi;
 
-    @NotBlank(message = "Loại nhân viên không được để trống")
-    private LoaiNV loaiNV;
-
     @PhoneNumber(message = "Số điện thoại không hợp lệ")
     private String soDienThoai;
 

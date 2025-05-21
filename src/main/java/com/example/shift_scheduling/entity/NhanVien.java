@@ -9,29 +9,32 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "Staff")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "staffType", discriminatorType = DiscriminatorType.STRING)
 public class NhanVien {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int maNV;
 
+    @Column(name = "staffName")
     private String hoTen;
+
+    @Column(name = "phone")
     private String soDienThoai;
+
+    @Column(name = "address")
     private String diaChi;
 
-    @Enumerated(EnumType.STRING)
-    private LoaiNV loaiNV;
-
+    @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gioiTinh;
 
-    public NhanVien(int maNV, String hoTen, String soDienThoai, String diaChi, LoaiNV loaiNV, Gender gioiTinh) {
-        this.maNV = maNV;
+    public NhanVien(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh) {
         this.hoTen = hoTen;
         this.soDienThoai = soDienThoai;
         this.diaChi = diaChi;
-        this.loaiNV = loaiNV;
         this.gioiTinh = gioiTinh;
     }
 }

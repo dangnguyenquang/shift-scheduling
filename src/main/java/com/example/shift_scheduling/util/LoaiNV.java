@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum LoaiNV {
     @JsonProperty("dau_bep")
-    DAU_BEP,
+    DAUBEP,
 
     @JsonProperty("phuc_vu")
-    PHUC_VU,
+    PHUCVU,
 
     @JsonProperty("le_tan")
-    LE_TAN,
+    LETAN,
 }
 
