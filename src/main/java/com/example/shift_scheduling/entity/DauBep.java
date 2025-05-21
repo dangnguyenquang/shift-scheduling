@@ -7,27 +7,29 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
+@DiscriminatorValue("DAUBEP")
 public class DauBep extends NhanVien {
 
+    @Column(name = "exp")
     private int kinhNghiem;
 
     @ElementCollection(targetClass = LoaiMon.class)
     @CollectionTable(
-            name = "nhanvien_loaimon",
-            joinColumns = @JoinColumn(name = "manhanvien")
+                name = "DetailedStaffFood",
+            joinColumns = @JoinColumn(name = "staffId")
     )
     @Enumerated(EnumType.STRING)
-    @Column(name = "maloaimon")
+
+    @Column(name = "foodType")
     private Set<LoaiMon> dsLoaiMonAn;
 
-    public DauBep(int maNV, String hoTen, String soDienThoai, String diaChi, LoaiNV loaiNV, Gender gioiTinh, int kinhNghiem, Set<LoaiMon> dsLoaiMonAn) {
-        super(maNV, hoTen, soDienThoai, diaChi, loaiNV, gioiTinh);
+    public DauBep(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh, int kinhNghiem, Set<LoaiMon> dsLoaiMonAn) {
+        super(hoTen, soDienThoai, diaChi, gioiTinh);
         this.kinhNghiem = kinhNghiem;
         this.dsLoaiMonAn = dsLoaiMonAn;
     }

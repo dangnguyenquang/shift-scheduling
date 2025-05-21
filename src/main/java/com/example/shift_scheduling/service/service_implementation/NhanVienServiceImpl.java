@@ -30,11 +30,9 @@ public class NhanVienServiceImpl implements INhanVienService {
     @Override
     public int addChef(DauBepDTO dto) {
         DauBep db = new DauBep(
-                dto.getMaNV(),
                 dto.getHoTen(),
                 dto.getSoDienThoai(),
                 dto.getDiaChi(),
-                dto.getLoaiNV(),
                 dto.getGioiTinh(),
                 dto.getKinhNghiem(),
                 dto.getDsLoaiMonAn()
@@ -47,11 +45,9 @@ public class NhanVienServiceImpl implements INhanVienService {
     @Override
     public int addWaiter(PhucVuDTO dto) {
         PhucVu pv = new PhucVu(
-                dto.getMaNV(),
                 dto.getHoTen(),
                 dto.getSoDienThoai(),
                 dto.getDiaChi(),
-                dto.getLoaiNV(),
                 dto.getGioiTinh(),
                 dto.getCapBac()
         );
@@ -63,11 +59,9 @@ public class NhanVienServiceImpl implements INhanVienService {
     @Override
     public int addReceptionist(LeTanDTO dto) {
         LeTan lt = new LeTan(
-                dto.getMaNV(),
                 dto.getHoTen(),
                 dto.getSoDienThoai(),
                 dto.getDiaChi(),
-                dto.getLoaiNV(),
                 dto.getGioiTinh(),
                 dto.isNgoaiNgu()
         );
