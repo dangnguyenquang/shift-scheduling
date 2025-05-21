@@ -2,43 +2,33 @@ package com.example.shift_scheduling.entity;
 
 import com.example.shift_scheduling.util.Gender;
 import com.example.shift_scheduling.util.LoaiMon;
+import com.example.shift_scheduling.util.LoaiNV;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 public class DauBep extends NhanVien {
 
     private int kinhNghiem;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = LoaiMon.class)
+    @CollectionTable(
+            name = "nhanvien_loaimon",
+            joinColumns = @JoinColumn(name = "manhanvien")
+    )
     @Enumerated(EnumType.STRING)
-    private List<LoaiMon> dsLoaiMonAn;
+    @Column(name = "maloaimon")
+    private Set<LoaiMon> dsLoaiMonAn;
 
-    public DauBep(int kinhNghiem, List<LoaiMon> dsLoaiMonAn) {
+    public DauBep(int maNV, String hoTen, String soDienThoai, String diaChi, LoaiNV loaiNV, Gender gioiTinh, int kinhNghiem, Set<LoaiMon> dsLoaiMonAn) {
+        super(maNV, hoTen, soDienThoai, diaChi, loaiNV, gioiTinh);
         this.kinhNghiem = kinhNghiem;
-        this.dsLoaiMonAn = dsLoaiMonAn;
-    }
-
-    public DauBep(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh, int kinhNghiem, List<LoaiMon> dsLoaiMonAn) {
-        super(hoTen, soDienThoai, diaChi, gioiTinh);
-        this.kinhNghiem = kinhNghiem;
-        this.dsLoaiMonAn = dsLoaiMonAn;
-    }
-
-    public int getKinhNghiem() {
-        return kinhNghiem;
-    }
-
-    public List<LoaiMon> getDsLoaiMonAn() {
-        return dsLoaiMonAn;
-    }
-
-    public void setKinhNghiem(int kinhNghiem) {
-        this.kinhNghiem = kinhNghiem;
-    }
-
-    public void setDsLoaiMonAn(List<LoaiMon> dsLoaiMonAn) {
         this.dsLoaiMonAn = dsLoaiMonAn;
     }
 }
