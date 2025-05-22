@@ -24,10 +24,10 @@ public enum LoaiMon {
     @JsonProperty("mon_nuong")
     MON_NUONG,
 
-    @JsonProperty("trang_mien_au")
-    TRANG_MIEN_AU,
+    @JsonProperty("trang_mieng_au")
+    TRANG_MIENG_AU,
 
-    @JsonProperty("trang_mien_a")
-    TRANG_MIEN_A;
+    @JsonProperty("trang_mieng_a")
+    TRANG_MIENG_A;
 }
 

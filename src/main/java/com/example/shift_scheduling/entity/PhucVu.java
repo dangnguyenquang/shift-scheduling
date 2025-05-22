@@ -16,6 +16,9 @@ public class PhucVu extends NhanVien {
     @Column(name = "level")
     private int capDo;
 
+    public PhucVu() {
+    }
+
     public PhucVu(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh, int capDo) {
         super(hoTen, soDienThoai, diaChi, gioiTinh);
         this.capDo = capDo;
