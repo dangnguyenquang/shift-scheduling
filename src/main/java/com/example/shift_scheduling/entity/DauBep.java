@@ -28,6 +28,10 @@ public class DauBep extends NhanVien {
     @Column(name = "foodType")
     private Set<LoaiMon> dsLoaiMonAn;
 
+    public DauBep() {
+        super();
+    }
+
     public DauBep(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh, int kinhNghiem, Set<LoaiMon> dsLoaiMonAn) {
         super(hoTen, soDienThoai, diaChi, gioiTinh);
         this.kinhNghiem = kinhNghiem;

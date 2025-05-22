@@ -16,6 +16,7 @@ public class NhanVien {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "staffId")
     private int maNV;
 
     @Column(name = "staffName")
@@ -30,6 +31,9 @@ public class NhanVien {
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gioiTinh;
+
+    public NhanVien() {
+    }
 
     public NhanVien(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh) {
         this.hoTen = hoTen;

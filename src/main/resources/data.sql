@@ -46,7 +46,11 @@ INSERT INTO DetailedFood (foodType, foodTypeName) VALUES
 ('MON_HAN', 'Món Hàn'),
 ('MON_NHAT', 'Món Nhật'),
 ('MON_VIET', 'Món Việt'),
-('MON_CHAY', 'Món Chay');
+('MON_TRUNG', 'Món Trung'),
+('MON_CHAY', 'Món Chay'),
+('MON_NUONG', 'Món Nướng'),
+('TRANG_MIEN_AU', 'Tráng miệng âu'),
+('TRANG_MIEN_A', 'Tráng miệng á');
 
 INSERT INTO DetailedStaffFood (staffId, foodType) VALUES
 (1, 'MON_AU'),

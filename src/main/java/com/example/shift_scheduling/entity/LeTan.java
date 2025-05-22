@@ -16,6 +16,9 @@ public class LeTan extends NhanVien {
     @Column(name = "english")
     private boolean ngoaiNgu;
 
+    public LeTan() {
+    }
+
     public LeTan(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh, boolean ngoaiNgu) {
         super(hoTen, soDienThoai, diaChi, gioiTinh);
         this.ngoaiNgu = ngoaiNgu;
