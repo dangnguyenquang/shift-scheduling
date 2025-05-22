@@ -32,7 +32,7 @@ CREATE TABLE ShiftType (
 
 CREATE TABLE Shift (
     shiftId INT AUTO_INCREMENT PRIMARY KEY,
-    shiftTime DATETIME,
+    shiftTime DATE,
     shiftTypeId INT,
     FOREIGN KEY (shiftTypeId) REFERENCES ShiftType(shiftTypeId)
 );

@@ -21,11 +21,11 @@ INSERT INTO ShiftType (typeName, chefNums, serveNums, receptNums) VALUES
 ( 'Ca linh dong', 2, 2, 1);
 
 INSERT INTO Shift (shiftTime, shiftTypeId) VALUES
-('2025-05-22 08:00:00', 1),
-('2025-05-22 12:00:00', 2),
-('2025-05-22 18:00:00', 3),
-('2025-05-23 08:00:00', 1),
-('2025-05-23 18:00:00', 3);
+('2025-05-22', 1),
+('2025-05-22', 2),
+('2025-05-22', 3),
+('2025-05-23', 1),
+('2025-05-23', 3);
 
 INSERT INTO DetailedShift (shiftId, staffId, status) VALUES
 (1, 1, null),
