@@ -1,6 +1,4 @@
 
-use shift_db
-
 CREATE TABLE Staff (
     staffId INT AUTO_INCREMENT PRIMARY KEY,
     staffName VARCHAR(50),
