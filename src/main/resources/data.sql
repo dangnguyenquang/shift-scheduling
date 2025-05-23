@@ -13,6 +13,10 @@ INSERT INTO Salary (staffId, month, year, salary) VALUES
 (4, 5, 2025, 0),
 (5, 5, 2025, 0);
 
+INSERT INTO Account (id, username, password) VALUES
+(1, 'NguyenQuangDang', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6'),
+(2, 'TruongHoaiBao', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6');
+
 INSERT INTO ShiftType (typeName, chefNums, serveNums, receptNums) VALUES
 ( 'Ca sang', 2, 3, 1),
 ( 'Ca trua', 3, 4, 1),
