@@ -8,7 +8,15 @@ CREATE TABLE Staff (
     staffType ENUM('DAUBEP', 'PHUCVU', 'LETAN') NOT NULL,
     level INT,
     english BOOLEAN,
-    exp INT
+    exp INT,
+    baseSalary FLOAT
+);
+
+CREATE TABLE Parameter (
+    parameterId INT AUTO_INCREMENT PRIMARY KEY,
+    chefBaseSalary FLOAT,
+    waiterBaseSalary FLOAT,
+    receptionistBaseSalary FLOAT
 );
 
 CREATE TABLE Account (
@@ -18,11 +26,12 @@ CREATE TABLE Account (
 );
 
 CREATE TABLE Salary (
+    salaryId INT,
     staffId INT,
     month INT,
     year INT,
     salary FLOAT,
-    PRIMARY KEY (staffId, month, year),
+    PRIMARY KEY (salaryId),
     FOREIGN KEY (staffId) REFERENCES Staff(staffId)
 );
 

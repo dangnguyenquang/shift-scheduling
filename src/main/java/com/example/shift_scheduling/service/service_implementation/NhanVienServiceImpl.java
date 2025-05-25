@@ -1,17 +1,11 @@
 package com.example.shift_scheduling.service.service_implementation;
 
-import com.example.shift_scheduling.dto.request.DauBepDTO;
-import com.example.shift_scheduling.dto.request.LeTanDTO;
-import com.example.shift_scheduling.dto.request.NhanVienDTO;
-import com.example.shift_scheduling.dto.request.PhucVuDTO;
+import com.example.shift_scheduling.dto.request.*;
 import com.example.shift_scheduling.entity.DauBep;
 import com.example.shift_scheduling.entity.LeTan;
 import com.example.shift_scheduling.entity.NhanVien;
 import com.example.shift_scheduling.entity.PhucVu;
-import com.example.shift_scheduling.repository.DauBepRepository;
-import com.example.shift_scheduling.repository.LeTanRepository;
-import com.example.shift_scheduling.repository.NhanVienRepository;
-import com.example.shift_scheduling.repository.PhucVuRepository;
+import com.example.shift_scheduling.repository.*;
 import com.example.shift_scheduling.service.INhanVienService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -26,23 +20,29 @@ public class NhanVienServiceImpl implements INhanVienService {
     private final PhucVuRepository phucVuRepository;
     private final LeTanRepository leTanRepository;
     private final NhanVienRepository nhanVienRepository;
+    private final ThamSoServiceImpl thamSoServiceImpl;
 
     public NhanVienServiceImpl(DauBepRepository dauBepRepository,
                                PhucVuRepository phucVuRepository,
                                LeTanRepository leTanRepository,
-                               NhanVienRepository nhanVienRepository) {
+                               NhanVienRepository nhanVienRepository,
+                               ThamSoServiceImpl thamSoServiceImpl) {
         this.dauBepRepository = dauBepRepository;
         this.phucVuRepository = phucVuRepository;
         this.leTanRepository = leTanRepository;
         this.nhanVienRepository = nhanVienRepository;
+        this.thamSoServiceImpl = thamSoServiceImpl;
     }
 
     @Override
     public int addChef(DauBepDTO dto) {
+        ThamSoDTO ts = thamSoServiceImpl.getFirstThamSo();
+
         DauBep db = new DauBep(
                 dto.getHoTen(),
                 dto.getSoDienThoai(),
                 dto.getDiaChi(),
+                ts.getLuongCBDB(),
                 dto.getGioiTinh(),
                 dto.getKinhNghiem(),
                 dto.getDsLoaiMonAn()
@@ -69,10 +69,13 @@ public class NhanVienServiceImpl implements INhanVienService {
 
     @Override
     public int addWaiter(PhucVuDTO dto) {
+        ThamSoDTO ts = thamSoServiceImpl.getFirstThamSo();
+
         PhucVu pv = new PhucVu(
                 dto.getHoTen(),
                 dto.getSoDienThoai(),
                 dto.getDiaChi(),
+                ts.getLuongCBPV(),
                 dto.getGioiTinh(),
                 dto.getCapBac()
         );
@@ -98,10 +101,13 @@ public class NhanVienServiceImpl implements INhanVienService {
 
     @Override
     public int addReceptionist(LeTanDTO dto) {
+        ThamSoDTO ts = thamSoServiceImpl.getFirstThamSo();
+
         LeTan lt = new LeTan(
                 dto.getHoTen(),
                 dto.getSoDienThoai(),
                 dto.getDiaChi(),
+                ts.getLuongCBLT(),
                 dto.getGioiTinh(),
                 dto.isNgoaiNgu()
         );

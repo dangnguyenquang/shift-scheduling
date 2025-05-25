@@ -19,8 +19,8 @@ public class LeTan extends NhanVien {
     public LeTan() {
     }
 
-    public LeTan(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh, boolean ngoaiNgu) {
-        super(hoTen, soDienThoai, diaChi, gioiTinh);
+    public LeTan(String hoTen, String soDienThoai, String diaChi, Float luongCB, Gender gioiTinh, boolean ngoaiNgu) {
+        super(hoTen, soDienThoai, diaChi, luongCB, gioiTinh);
         this.ngoaiNgu = ngoaiNgu;
     }
 }

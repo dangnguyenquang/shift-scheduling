@@ -1,17 +1,21 @@
-INSERT INTO Staff (staffName, gender, address, phone, staffType, level, english, exp) VALUES
-('Nguyen Van A', 'MALE', 'Hanoi', '0909123456', 'DAUBEP', 5, TRUE, 10),
-('Tran Thi B', 'FEMALE', 'HCM', '0912345678', 'PHUCVU', 2, TRUE, 3),
-('Le Van C', 'MALE', 'Da Nang', '0923456789', 'LETAN', 3, FALSE, 4),
-('Pham Thi D', 'FEMALE', 'Hue', '0934567890', 'DAUBEP', 4, TRUE, 8),
-('Hoang Van E', 'MALE', 'Can Tho', '0945678901', 'PHUCVU', 1, FALSE, 2);
+INSERT INTO Staff (staffName, gender, address, phone, staffType, level, english, exp, baseSalary) VALUES
+('Nguyen Van A', 'MALE', 'Hanoi', '0909123456', 'DAUBEP', 5, TRUE, 10, 350000),
+('Tran Thi B', 'FEMALE', 'HCM', '0912345678', 'PHUCVU', 2, TRUE, 3, 200000),
+('Le Van C', 'MALE', 'Da Nang', '0923456789', 'LETAN', 3, FALSE, 4, 250000),
+('Pham Thi D', 'FEMALE', 'Hue', '0934567890', 'DAUBEP', 4, TRUE, 8, 350000),
+('Hoang Van E', 'MALE', 'Can Tho', '0945678901', 'PHUCVU', 1, FALSE, 2, 200000);
 
 
-INSERT INTO Salary (staffId, month, year, salary) VALUES
-(1, 5, 2025, 0),
-(2, 5, 2025, 0),
-(3, 5, 2025, 0),
-(4, 5, 2025, 0),
-(5, 5, 2025, 0);
+INSERT INTO Salary (salaryId, staffId, month, year, salary) VALUES
+(1, 1, 5, 2025, 0),
+(2, 2, 5, 2025, 0),
+(3, 3, 5, 2025, 0),
+(4, 4, 5, 2025, 0),
+(5, 5, 5, 2025, 0);
+
+INSERT INTO Parameter (parameterId, chefBaseSalary, waiterBaseSalary, receptionistBaseSalary) VALUES
+(1, 350000, 250000, 200000);
+
 
 INSERT INTO Account (id, username, password) VALUES
 (1, 'NguyenQuangDang', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6'),

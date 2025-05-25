@@ -32,8 +32,8 @@ public class DauBep extends NhanVien {
         super();
     }
 
-    public DauBep(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh, int kinhNghiem, Set<LoaiMon> dsLoaiMonAn) {
-        super(hoTen, soDienThoai, diaChi, gioiTinh);
+    public DauBep(String hoTen, String soDienThoai, String diaChi, Float luongCB, Gender gioiTinh, int kinhNghiem, Set<LoaiMon> dsLoaiMonAn) {
+        super(hoTen, soDienThoai, diaChi, luongCB, gioiTinh);
         this.kinhNghiem = kinhNghiem;
         this.dsLoaiMonAn = dsLoaiMonAn;
     }
