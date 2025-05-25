@@ -23,6 +23,8 @@ public class DauBepDTO implements Serializable {
     @NotBlank(message = "Họ tên không được để trống")
     private String hoTen;
 
+    private float luongCB;
+
     private Gender gioiTinh;
 
     @NotBlank(message = "Địa chỉ không được để trống")
