@@ -16,6 +16,8 @@ import java.util.Set;
 public class NhanVienDTO implements Serializable {
     private Integer maNV;
 
+    private float luongCB;
+
     @NotBlank(message = "Họ tên không được để trống")
     private String hoTen;
 

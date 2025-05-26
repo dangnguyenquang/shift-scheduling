@@ -9,15 +9,29 @@ CREATE TABLE Staff (
     level INT,
     english BOOLEAN,
     exp INT,
-    basicSalary FLOAT
+    baseSalary FLOAT
+);
+
+CREATE TABLE Parameter (
+    parameterId INT AUTO_INCREMENT PRIMARY KEY,
+    chefBaseSalary FLOAT,
+    waiterBaseSalary FLOAT,
+    receptionistBaseSalary FLOAT
+);
+
+CREATE TABLE Account (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Salary (
+    salaryId INT,
     staffId INT,
     month INT,
     year INT,
     salary FLOAT,
-    PRIMARY KEY (staffId, month, year),
+    PRIMARY KEY (salaryId),
     FOREIGN KEY (staffId) REFERENCES Staff(staffId)
 );
 
@@ -86,6 +100,7 @@ CREATE TABLE DetailedStaffFood (
     FOREIGN KEY (foodType) REFERENCES Food(foodType)
 );
 
+-- remove primary id
 CREATE Table DetailedShiftFood (
     shiftFoodId INT AUTO_INCREMENT PRIMARY KEY,
     foodId INT,

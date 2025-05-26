@@ -19,8 +19,8 @@ public class PhucVu extends NhanVien {
     public PhucVu() {
     }
 
-    public PhucVu(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh, int capDo) {
-        super(hoTen, soDienThoai, diaChi, gioiTinh);
+    public PhucVu(String hoTen, String soDienThoai, String diaChi, Float luongCB, Gender gioiTinh, int capDo) {
+        super(hoTen, soDienThoai, diaChi, luongCB, gioiTinh);
         this.capDo = capDo;
     }
 }

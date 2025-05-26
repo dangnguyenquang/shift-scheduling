@@ -28,6 +28,9 @@ public class NhanVien {
     @Column(name = "address")
     private String diaChi;
 
+    @Column(name = "baseSalary")
+    private Float luongCB;
+
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gioiTinh;
@@ -35,10 +38,11 @@ public class NhanVien {
     public NhanVien() {
     }
 
-    public NhanVien(String hoTen, String soDienThoai, String diaChi, Gender gioiTinh) {
+    public NhanVien(String hoTen, String soDienThoai, String diaChi, Float luongCB, Gender gioiTinh) {
         this.hoTen = hoTen;
         this.soDienThoai = soDienThoai;
         this.diaChi = diaChi;
+        this.luongCB = luongCB;
         this.gioiTinh = gioiTinh;
     }
 }
