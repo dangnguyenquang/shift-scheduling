@@ -1,0 +1,42 @@
+[
+  {
+    "loaiCa": "CASANG",
+    "slDauBep": 10,
+    "slPhucVu": 10,
+    "slLeTan": 2,
+    "tgBatDau": 6.0,
+    "tgKetThuc": 11.0,
+    "chiTietMon": [
+      {"id": 0, "maMonAn": 1, "soLuong": 30 },
+      {"id": 0, "maMonAn": 2, "soLuong": 20 }
+    ]
+  },
+  {
+    "loaiCa": "CACHIEU",
+    "slDauBep": 12,
+    "slPhucVu": 15,
+    "slLeTan": 4,
+    "tgBatDau": 12.0,
+    "tgKetThuc": 17.0,
+    "phuCapTrua": "COM_GA",
+    "buffet": "BUFFET_HAISAN",
+    "chiTietMon": [
+      {"id": 0, "maMonAn": 1, "soLuong": 50 },
+      {"id": 0, "maMonAn": 3, "soLuong": 1 }
+    ]
+  },
+  {
+    "loaiCa": "CATOI",
+    "slDauBep": 10,
+    "slPhucVu": 10,
+    "slLeTan": 2,
+    "tgBatDau": 17.0,
+    "tgKetThuc": 23.0,
+    "phuCapToi": 30000,
+    "suKien": "Acoustic",
+    "chiTietMon": [
+      {"id": 0, "maMonAn": 4, "soLuong": 25 },
+      {"id": 0, "maMonAn": 5, "soLuong": 40 }
+    ]
+  }
+]

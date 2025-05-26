@@ -1,14 +1,15 @@
 
 CREATE TABLE Staff (
     staffId INT AUTO_INCREMENT PRIMARY KEY,
-    staffName VARCHAR(50),
+    staffName VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     gender ENUM('MALE', 'FEMALE') NOT NULL,
     address VARCHAR(100),
     phone VARCHAR(12),
     staffType ENUM('DAUBEP', 'PHUCVU', 'LETAN') NOT NULL,
     level INT,
     english BOOLEAN,
-    exp INT
+    exp INT,
+    basicSalary FLOAT
 );
 
 CREATE TABLE Salary (
@@ -20,19 +21,20 @@ CREATE TABLE Salary (
     FOREIGN KEY (staffId) REFERENCES Staff(staffId)
 );
 
-CREATE TABLE ShiftType (
-    shiftTypeId INT AUTO_INCREMENT PRIMARY KEY,
-    typeName VARCHAR(100),
-    chefNums INT,
-    serveNums INT,
-    receptNums INT
-);
 
 CREATE TABLE Shift (
     shiftId INT AUTO_INCREMENT PRIMARY KEY,
     shiftTime DATE,
-    shiftTypeId INT,
-    FOREIGN KEY (shiftTypeId) REFERENCES ShiftType(shiftTypeId)
+    shiftTypeCode ENUM('CASANG', 'CACHIEU', 'CATOI'),
+    chefNums INT,
+    serveNums INT,
+    receptNums INT,
+    timeStart FLOAT,
+    timeEnd FLOAT,
+    mealAllowance VARCHAR(100),
+    overtimePay FLOAT,
+    buffet VARCHAR(50),
+    events VARCHAR(50)
 );
 
 CREATE TABLE DetailedShift (
@@ -46,7 +48,7 @@ CREATE TABLE DetailedShift (
 
 CREATE TABLE Food (
     foodId INT AUTO_INCREMENT PRIMARY KEY,
-    foodName VARCHAR(50),
+    foodName VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     foodType ENUM(
         'MON_AU',
         'MON_HAN',
@@ -59,7 +61,7 @@ CREATE TABLE Food (
         'TRANG_MIEN_A'
     ),
     price FLOAT,
-    description VARCHAR(255),
+    description VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     cookingTime INT,
     foodStatus BOOLEAN,
     INDEX idx_foodType(foodType)
@@ -84,7 +86,16 @@ CREATE TABLE DetailedStaffFood (
     FOREIGN KEY (foodType) REFERENCES Food(foodType)
 );
 
-CREATE TABLE DetailedFood (
+CREATE Table DetailedShiftFood (
+    shiftFoodId INT AUTO_INCREMENT PRIMARY KEY,
+    foodId INT,
+    shiftId INT,
+    FOREIGN KEY (foodId) REFERENCES Food(foodId),
+    FOREIGN KEY (shiftId) REFERENCES Shift(shiftId),
+    quantity INT
+);
+
+CREATE TABLE DetailedFoodType (
     foodType ENUM(
         'MON_AU',
         'MON_HAN',
@@ -96,7 +107,7 @@ CREATE TABLE DetailedFood (
         'TRANG_MIEN_AU',
         'TRANG_MIEN_A'
     ) PRIMARY KEY,
-    foodTypeName VARCHAR(255)
+    foodTypeName VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 );
 
 CREATE TABLE Feedback (
@@ -104,14 +115,14 @@ CREATE TABLE Feedback (
     shiftId INT,
     staffId INT,
     rate INT,
-    details VARCHAR(255),
+    details VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     FOREIGN KEY (shiftId) REFERENCES Shift(shiftId),
     FOREIGN KEY (staffId) REFERENCES Staff(staffId)
 );
 
 CREATE TABLE TableType (
     tableTypeId INT AUTO_INCREMENT PRIMARY KEY,
-    tbTypeName VARCHAR(100),
+    tbTypeName VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     seats INT
 );
 
