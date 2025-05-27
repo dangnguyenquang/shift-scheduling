@@ -1,6 +1,7 @@
 package com.example.shift_scheduling.repository;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,6 @@ public interface CaRepository extends JpaRepository<Ca, Integer> {
     boolean existsByNgayCongAndLoaiCa(LocalDate date, LoaiCa type);
 
     Ca findByNgayCongAndLoaiCa(LocalDate date, LoaiCa loaiCa);
+
+    List<Ca> findByNgayCongBetween(LocalDate start, LocalDate end);
 }

@@ -38,6 +38,9 @@ public class NhanVien {
     @Enumerated(EnumType.STRING)
     private Gender gioiTinh;
 
+    @Column(name = "staffType", insertable = false, updatable = false)
+    private LoaiNV loaiNV;
+
     public NhanVien() {
     }
 

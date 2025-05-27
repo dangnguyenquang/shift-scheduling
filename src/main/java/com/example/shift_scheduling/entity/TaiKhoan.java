@@ -1,5 +1,6 @@
 package com.example.shift_scheduling.entity;
 
+import com.example.shift_scheduling.util.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,12 +17,15 @@ public class TaiKhoan {
     private String username;
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     public TaiKhoan() {
     }
 
-    public TaiKhoan(Integer id, String username, String password) {
-        this.id = id;
+    public TaiKhoan(String username, String password, Role role) {
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 }

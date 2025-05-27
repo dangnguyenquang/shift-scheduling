@@ -11,27 +11,36 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.shift_scheduling.dto.request.CaChieuDTO;
 import com.example.shift_scheduling.dto.request.CaSangDTO;
+import com.example.shift_scheduling.dto.request.CaThongKeDTO;
 import com.example.shift_scheduling.dto.request.CaToiDTO;
 import com.example.shift_scheduling.entity.Ca;
 import com.example.shift_scheduling.entity.CaChieu;
 import com.example.shift_scheduling.entity.CaSang;
 import com.example.shift_scheduling.entity.CaToi;
+import com.example.shift_scheduling.entity.ChiTietCa;
 import com.example.shift_scheduling.entity.ChiTietMon;
 import com.example.shift_scheduling.entity.ChiTietMonId;
 import com.example.shift_scheduling.entity.MonAn;
+import com.example.shift_scheduling.entity.NhanVien;
 import com.example.shift_scheduling.repository.CaChieuRepository;
 import com.example.shift_scheduling.repository.CaRepository;
 import com.example.shift_scheduling.repository.CaSangRepository;
 import com.example.shift_scheduling.repository.CaToiRepository;
+import com.example.shift_scheduling.repository.ChiTietCaRepository;
 import com.example.shift_scheduling.repository.ChiTietMonRepository;
 import com.example.shift_scheduling.service.ICaService;
 import com.example.shift_scheduling.service.IMonAnService;
 import com.example.shift_scheduling.util.LoaiCa;
+import com.example.shift_scheduling.util.TrangThaiXepCa;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.*;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -46,6 +55,7 @@ public class CaServiceImpl implements ICaService {
     private final CaSangRepository caSangRepository;
     private final CaChieuRepository caChieuRepository;
     private final CaToiRepository caToiRepository;
+    private final ChiTietCaRepository chiTietCaRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -333,4 +343,48 @@ public class CaServiceImpl implements ICaService {
         }
     }
 
+    public List<CaThongKeDTO> thongKeCa(int thang, int nam) {
+        LocalDate startDate = LocalDate.of(nam, thang, 1);
+        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+
+        List<ChiTietCa> danhSachChiTietCa = chiTietCaRepository.findByCa_NgayCongBetweenAndTtXepCa(startDate, endDate, TrangThaiXepCa.THANHCONG);
+
+        Map<Integer, CaThongKeDTO> thongKeTheoNhanVien = new HashMap<>();
+
+        for (ChiTietCa chiTietCa : danhSachChiTietCa) {
+            NhanVien nv = chiTietCa.getNhanVien();
+            Ca ca = chiTietCa.getCa();
+
+            if (nv == null || ca == null) continue;
+
+            int maNV = nv.getMaNV();
+
+            thongKeTheoNhanVien.putIfAbsent(maNV, CaThongKeDTO.builder()
+                    .employeeId(maNV)
+                    .caSang(0)
+                    .caChieu(0)
+                    .caToi(0)
+                    .soBuoiBuffet(0)
+                    .soBuoiSuKien(0)
+                    .build());
+
+            CaThongKeDTO dto = thongKeTheoNhanVien.get(maNV);
+
+            if (ca instanceof CaSang) {
+                dto.setCaSang(dto.getCaSang() + 1);
+            } else if (ca instanceof CaChieu chieu) {
+                dto.setCaChieu(dto.getCaChieu() + 1);
+                if (chieu.getBuffet() != null && !chieu.getBuffet().isBlank()) {
+                    dto.setSoBuoiBuffet(dto.getSoBuoiBuffet() + 1);
+                }
+            } else if (ca instanceof CaToi toi) {
+                dto.setCaToi(dto.getCaToi() + 1);
+                if (toi.getSuKien() != null && !toi.getSuKien().isBlank()) {
+                    dto.setSoBuoiSuKien(dto.getSoBuoiSuKien() + 1);
+                }
+            }
+        }
+
+        return new ArrayList<>(thongKeTheoNhanVien.values());
+    }
 }

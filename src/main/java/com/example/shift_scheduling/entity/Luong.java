@@ -1,6 +1,7 @@
 package com.example.shift_scheduling.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,12 +26,13 @@ public class Luong {
     private int nam;
 
     @Column(name = "salary")
-    private Float luong;
+    private float luong;
 
     public Luong() {
     }
 
-    public Luong(int maNV, int thang, int nam, Float luong) {
+    @Builder
+    public Luong(int maNV, int thang, int nam, float luong) {
         this.maNV = maNV;
         this.thang = thang;
         this.nam = nam;
