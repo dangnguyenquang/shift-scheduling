@@ -1,38 +1,49 @@
 package com.example.shift_scheduling.service.service_implementation;
 
+import com.example.shift_scheduling.dto.request.ChiTietCaDTO;
+import com.example.shift_scheduling.dto.request.DauBepDTO;
+import com.example.shift_scheduling.dto.request.LeTanDTO;
+import com.example.shift_scheduling.dto.request.NhanVienDTO;
+import com.example.shift_scheduling.dto.request.PhucVuDTO;
+import com.example.shift_scheduling.entity.Ca;
+import com.example.shift_scheduling.entity.ChiTietCa;
+import com.example.shift_scheduling.entity.ChiTietCaId;
+
 import com.example.shift_scheduling.dto.request.*;
 import com.example.shift_scheduling.entity.DauBep;
 import com.example.shift_scheduling.entity.LeTan;
 import com.example.shift_scheduling.entity.NhanVien;
 import com.example.shift_scheduling.entity.PhucVu;
-import com.example.shift_scheduling.repository.*;
+
+import com.example.shift_scheduling.repository.ChiTietCaRepository;
+import com.example.shift_scheduling.repository.DauBepRepository;
+import com.example.shift_scheduling.repository.LeTanRepository;
+import com.example.shift_scheduling.repository.NhanVienRepository;
+import com.example.shift_scheduling.repository.PhucVuRepository;
+import com.example.shift_scheduling.service.ICaService;
+
 import com.example.shift_scheduling.service.INhanVienService;
+import com.example.shift_scheduling.util.TrangThaiXepCa;
+
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class NhanVienServiceImpl implements INhanVienService {
 
     private final DauBepRepository dauBepRepository;
     private final PhucVuRepository phucVuRepository;
     private final LeTanRepository leTanRepository;
     private final NhanVienRepository nhanVienRepository;
+    private final ICaService iCaService;
+    private final ChiTietCaRepository chiTietCaRepository;
     private final ThamSoServiceImpl thamSoServiceImpl;
-
-    public NhanVienServiceImpl(DauBepRepository dauBepRepository,
-                               PhucVuRepository phucVuRepository,
-                               LeTanRepository leTanRepository,
-                               NhanVienRepository nhanVienRepository,
-                               ThamSoServiceImpl thamSoServiceImpl) {
-        this.dauBepRepository = dauBepRepository;
-        this.phucVuRepository = phucVuRepository;
-        this.leTanRepository = leTanRepository;
-        this.nhanVienRepository = nhanVienRepository;
-        this.thamSoServiceImpl = thamSoServiceImpl;
-    }
 
     @Override
     public int addChef(DauBepDTO dto) {
@@ -45,8 +56,7 @@ public class NhanVienServiceImpl implements INhanVienService {
                 ts.getLuongCBDB(),
                 dto.getGioiTinh(),
                 dto.getKinhNghiem(),
-                dto.getDsLoaiMonAn()
-        );
+                dto.getDsLoaiMonAn());
 
         dauBepRepository.save(db);
         return 1;
@@ -77,8 +87,7 @@ public class NhanVienServiceImpl implements INhanVienService {
                 dto.getDiaChi(),
                 ts.getLuongCBPV(),
                 dto.getGioiTinh(),
-                dto.getCapBac()
-        );
+                dto.getCapBac());
 
         phucVuRepository.save(pv);
         return 1;
@@ -109,8 +118,7 @@ public class NhanVienServiceImpl implements INhanVienService {
                 dto.getDiaChi(),
                 ts.getLuongCBLT(),
                 dto.getGioiTinh(),
-                dto.isNgoaiNgu()
-        );
+                dto.isNgoaiNgu());
 
         leTanRepository.save(lt);
         return 1;
@@ -187,6 +195,41 @@ public class NhanVienServiceImpl implements INhanVienService {
                 .soDienThoai(staff.getSoDienThoai())
                 .diaChi(staff.getDiaChi())
                 .gioiTinh(staff.getGioiTinh())
+                .loaiNV(staff.getLoaiNV())
+                .build();
+    }
+
+    @Override
+    public ChiTietCaDTO shiftRegister(Integer maNv, Integer maCa) {
+        Ca ca = iCaService.findShiftById(maCa);
+        NhanVien nhanVien = nhanVienRepository.findById(maNv)
+                .orElseThrow(() -> new EntityNotFoundException("Staff not found!"));
+
+        ChiTietCaId id = new ChiTietCaId();
+        id.setShiftId(maCa);
+        id.setStaffId(maNv);
+
+        ChiTietCa chiTietCa = ChiTietCa.builder()
+                .ctId(id)
+                .ca(ca)
+                .nhanVien(nhanVien)
+                .ttXepCa(TrangThaiXepCa.CHUAXEP)
+                .build();
+
+        ChiTietCaDTO chiTietCaDTO = convertChiTietCaDTO(chiTietCa);
+        chiTietCaRepository.save(chiTietCa);
+        return chiTietCaDTO;
+    }
+
+    @Override
+    public ChiTietCaDTO convertChiTietCaDTO(ChiTietCa chiTietCa) {
+        return ChiTietCaDTO.builder()
+                .maCa(chiTietCa.getCa().getId())
+                .maNv(chiTietCa.getNhanVien().getMaNV())
+                .loaiCa(chiTietCa.getCa().getLoaiCa())
+                .ngayCong(chiTietCa.getCa().getNgayCong())
+                .tenNhanVien(chiTietCa.getNhanVien().getHoTen())
+                .trangThaiXepCa(chiTietCa.getTtXepCa())
                 .build();
     }
 }

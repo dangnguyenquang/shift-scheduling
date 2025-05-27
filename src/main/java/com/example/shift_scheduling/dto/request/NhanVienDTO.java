@@ -2,6 +2,7 @@ package com.example.shift_scheduling.dto.request;
 
 import com.example.shift_scheduling.dto.validator.PhoneNumber;
 import com.example.shift_scheduling.util.Gender;
+import com.example.shift_scheduling.util.LoaiNV;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -28,4 +29,6 @@ public class NhanVienDTO implements Serializable {
 
     @PhoneNumber(message = "Số điện thoại không hợp lệ")
     private String soDienThoai;
+
+    private LoaiNV loaiNV;
 }

@@ -17,30 +17,21 @@ INSERT INTO Parameter (parameterId, chefBaseSalary, waiterBaseSalary, receptioni
 (1, 350000, 250000, 200000);
 
 
-INSERT INTO Account (id, username, password) VALUES
-(1, 'NguyenQuangDang', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6'),
-(2, 'TruongHoaiBao', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6');
+INSERT INTO Account (id, username, password, role) VALUES
+(1, 'NguyenQuangDang', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6', 'ADMIN'),
+(2, 'TruongHoaiBao', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6', 'MANAGER');
 
-INSERT INTO ShiftType (typeName, chefNums, serveNums, receptNums) VALUES
-( 'Ca sang', 2, 3, 1),
-( 'Ca trua', 3, 4, 1),
-( 'Ca toi', 4, 5, 1),
-( 'Ca khuya', 1, 2, 1),
-( 'Ca linh dong', 2, 2, 1);
-
-INSERT INTO Shift (shiftTime, shiftTypeId) VALUES
-('2025-05-22', 1),
-('2025-05-22', 2),
-('2025-05-22', 3),
-('2025-05-23', 1),
-('2025-05-23', 3);
+INSERT INTO Shift (shiftTime, shiftTypeCode, chefNums, serveNums, receptNums, timeStart, timeEnd, mealAllowance, buffet, overtimePay, events) VALUES
+('2025-05-24', 'CASANG', 10, 10, 2, 6, 11, null, null, null, null),
+('2025-05-24', 'CACHIEU', 10, 10, 2, 12, 17, "COM_GA", "BUFFET_LAU", null , null),
+('2025-05-24', 'CATOI', 12, 12, 4, 17, 23, null, null, 30000, "ACOUSTIC");
 
 INSERT INTO DetailedShift (shiftId, staffId, status) VALUES
 (1, 1, null),
 (1, 2, null),
 (2, 3, null),
 (3, 4, null),
-(4, 5, null);
+(3, 5, null);
 
 INSERT INTO Food (foodName, foodType, price, description, cookingTime, foodStatus) VALUES
 ('Mì Ý', 'MON_AU', 100000, 'Mì Ý sốt bò bằm', 20, TRUE),
@@ -49,7 +40,7 @@ INSERT INTO Food (foodName, foodType, price, description, cookingTime, foodStatu
 ('Bún bò Huế', 'MON_VIET', 70000, 'Đặc sản Huế', 30, TRUE),
 ('Đậu hũ chiên', 'MON_CHAY', 40000, 'Món chay nhẹ nhàng', 15, TRUE);
 
-INSERT INTO DetailedFood (foodType, foodTypeName) VALUES
+INSERT INTO DetailedFoodType (foodType, foodTypeName) VALUES
 ('MON_AU', 'Món Âu'),
 ('MON_HAN', 'Món Hàn'),
 ('MON_NHAT', 'Món Nhật'),
@@ -67,13 +58,19 @@ INSERT INTO DetailedStaffFood (staffId, foodType) VALUES
 (4, 'MON_CHAY'),
 (2, null);
 
+INSERT INTO DetailedShiftFood (foodId, shiftId, quantity) VALUES
+(1, 1, 10),
+(2, 1, 10),
+(1, 2, 8),
+(5, 2, 2),
+(2, 3, 5);
+
 
 INSERT INTO Feedback (feedbackCode, shiftId, staffId, rate, details) VALUES
 (1, 1, 1, 5, 'Rất tốt'),
 (2, 2, 2, 4, 'Tốt'),
-(3, 3, 3, 2, 'Cần cải thiện'),
-(4, 4, 4, 3, 'Trung bình'),
-(5, 5, 5, 5, 'Xuất sắc');
+(3, 3, 3, 2, 'Cần cải thiện');
+
 
 INSERT INTO TableType ( tbTypeName, seats) VALUES
 ('Bàn 2 người', 2),
@@ -85,13 +82,11 @@ INSERT INTO TableType ( tbTypeName, seats) VALUES
 INSERT INTO `DiningTable` (tableTypeId) VALUES
 (1),
 (2),
-(2),
-(3),
-(5);
+(2);
+
 
 INSERT INTO DetailedTable (tableId, shiftId, customers) VALUES
 (1, 1, 2),
 (2, 1, 4),
-(3, 2, 3),
-(4, 3, 6),
-(5, 4, 7);
+(3, 2, 3);
+

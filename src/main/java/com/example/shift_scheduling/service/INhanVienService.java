@@ -1,6 +1,11 @@
 package com.example.shift_scheduling.service;
 
-import com.example.shift_scheduling.dto.request.*;
+import com.example.shift_scheduling.dto.request.ChiTietCaDTO;
+import com.example.shift_scheduling.dto.request.DauBepDTO;
+import com.example.shift_scheduling.dto.request.LeTanDTO;
+import com.example.shift_scheduling.dto.request.NhanVienDTO;
+import com.example.shift_scheduling.dto.request.PhucVuDTO;
+import com.example.shift_scheduling.entity.ChiTietCa;
 
 import java.util.List;
 
@@ -26,4 +31,7 @@ public interface INhanVienService {
     NhanVienDTO getStaffById(int id);
 
     List<NhanVienDTO> getAllStaffs();
+
+    ChiTietCaDTO shiftRegister(Integer maNv, Integer maCa);
+    ChiTietCaDTO convertChiTietCaDTO(ChiTietCa chiTietCa);
 }

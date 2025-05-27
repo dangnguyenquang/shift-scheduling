@@ -1,5 +1,6 @@
 package com.example.shift_scheduling.controller;
 
+import com.example.shift_scheduling.dto.request.ChiTietCaDTO;
 import com.example.shift_scheduling.dto.request.DauBepDTO;
 import com.example.shift_scheduling.dto.request.LeTanDTO;
 import com.example.shift_scheduling.dto.request.NhanVienDTO;
@@ -40,6 +41,7 @@ public class NhanVienController {
 
     @PostMapping("/receptionist")
     public ResponseData<Integer> addReceptionist(@Valid @RequestBody LeTanDTO letan) {
+        log.info("le tan: " + letan.toString());
         int result = nhanVienServiceIml.addReceptionist(letan);
         return new ResponseData<>(HttpStatus.CREATED.value(), "Receptionist added successfully", result);
     }
@@ -90,5 +92,11 @@ public class NhanVienController {
     public ResponseData<?> getStaffById(@PathVariable Integer id) {
         NhanVienDTO dto = nhanVienServiceIml.getStaffById(id);
         return new ResponseData<>(HttpStatus.OK.value(), "Get staff successfully", dto);
+    }
+
+    @PostMapping("/register-shift")
+        public ResponseData<?> shiftRegister(@RequestParam Integer maNv, @RequestParam Integer  maCa) {
+        ChiTietCaDTO chiTietCaDTO = nhanVienServiceIml.shiftRegister(maNv, maCa);
+        return new ResponseData<>(HttpStatus.OK.value(), "Register successfully", chiTietCaDTO);
     }
 }

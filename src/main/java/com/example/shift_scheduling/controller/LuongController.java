@@ -21,7 +21,6 @@ public class LuongController {
 
     @GetMapping("/calculate")
     public ResponseData<?> calculateSalary(@RequestParam int month, @RequestParam int year) {
-        // Logic tính lương sẽ bổ sung sau
         luongServiceImpl.calculateSalary(month, year);
         return new ResponseData<>(HttpStatus.OK.value(), "Salary calculation completed", null);
     }
