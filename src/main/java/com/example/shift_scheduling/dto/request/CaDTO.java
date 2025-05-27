@@ -1,19 +1,16 @@
 package com.example.shift_scheduling.dto.request;
 
-import java.io.Serializable;
 import java.util.List;
 
-import com.example.shift_scheduling.entity.ChiTietMon;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.validation.constraints.Min;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
-public class CaSangDTO implements Serializable {
-
+@Builder
+public class CaDTO {
     @Min(value = 1, message = "So luong dau bep it nhat la 1")
     private Integer slDauBep;
 
@@ -29,6 +26,18 @@ public class CaSangDTO implements Serializable {
     @Min(value = 24, message = "Thoi gian ket thuc phai nho hon 24")
     private Double tgKetThuc;
 
-    private List<ChiTietMon> chiTietMon;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @Min(value = 0, message = "Phu cap tien OT phai lon hon 0")
+    private Double phuCapToi;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String suKien;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String phuCapTrua;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String buffet;
+
+    private List<ChiTietMonDTO> chiTietMon;
 }

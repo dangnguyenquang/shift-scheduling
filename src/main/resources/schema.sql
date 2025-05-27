@@ -3,8 +3,8 @@ CREATE TABLE Staff (
     staffId INT AUTO_INCREMENT PRIMARY KEY,
     staffName VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     gender ENUM('MALE', 'FEMALE') NOT NULL,
-    address VARCHAR(100),
-    phone VARCHAR(12),
+    address VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    phone VARCHAR(12) UNIQUE,
     staffType ENUM('DAUBEP', 'PHUCVU', 'LETAN') NOT NULL,
     level INT,
     english BOOLEAN,
@@ -45,10 +45,10 @@ CREATE TABLE Shift (
     receptNums INT,
     timeStart FLOAT,
     timeEnd FLOAT,
-    mealAllowance VARCHAR(100),
+    mealAllowance VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     overtimePay FLOAT,
-    buffet VARCHAR(50),
-    events VARCHAR(50)
+    buffet VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    events VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 );
 
 CREATE TABLE DetailedShift (
@@ -62,7 +62,7 @@ CREATE TABLE DetailedShift (
 
 CREATE TABLE Food (
     foodId INT AUTO_INCREMENT PRIMARY KEY,
-    foodName VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    foodName VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
     foodType ENUM(
         'MON_AU',
         'MON_HAN',
@@ -71,8 +71,8 @@ CREATE TABLE Food (
         'MON_VIET',
         'MON_CHAY',
         'MON_NUONG',
-        'TRANG_MIEN_AU',
-        'TRANG_MIEN_A'
+        'TRANG_MIENG_AU',
+        'TRANG_MIENG_A'
     ),
     price FLOAT,
     description VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
@@ -92,19 +92,18 @@ CREATE TABLE DetailedStaffFood (
         'MON_VIET',
         'MON_CHAY',
         'MON_NUONG',
-        'TRANG_MIEN_AU',
-        'TRANG_MIEN_A'
+        'TRANG_MIENG_AU',
+        'TRANG_MIENG_A'
     ),
 
     FOREIGN KEY (staffId) REFERENCES Staff(staffId),
     FOREIGN KEY (foodType) REFERENCES Food(foodType)
 );
 
--- remove primary id
 CREATE Table DetailedShiftFood (
-    shiftFoodId INT AUTO_INCREMENT PRIMARY KEY,
     foodId INT,
     shiftId INT,
+    PRIMARY KEY (foodId, shiftId),
     FOREIGN KEY (foodId) REFERENCES Food(foodId),
     FOREIGN KEY (shiftId) REFERENCES Shift(shiftId),
     quantity INT
@@ -119,8 +118,8 @@ CREATE TABLE DetailedFoodType (
         'MON_VIET',
         'MON_CHAY',
         'MON_NUONG',
-        'TRANG_MIEN_AU',
-        'TRANG_MIEN_A'
+        'TRANG_MIENG_AU',
+        'TRANG_MIENG_A'
     ) PRIMARY KEY,
     foodTypeName VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 );

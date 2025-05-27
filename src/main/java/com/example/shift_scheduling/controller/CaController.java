@@ -25,6 +25,7 @@ import com.example.shift_scheduling.entity.CaChieu;
 import com.example.shift_scheduling.entity.CaSang;
 import com.example.shift_scheduling.entity.CaToi;
 import com.example.shift_scheduling.service.ICaService;
+import com.example.shift_scheduling.service.IXepCaService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @Validated
 public class CaController {
     private final ICaService iCaService;
+    private final IXepCaService iXepCaService;
 
     @PostMapping("/auto-generate")
     public ResponseData<?> autoGenerateShifts(@RequestParam @Valid LocalDate date, @RequestParam Integer days) {
@@ -73,6 +75,12 @@ public class CaController {
     public ResponseData<?> updatEeveningShift(@RequestParam LocalDate date, @RequestBody CaToiDTO caToiDTO) {
         CaToi caToi = iCaService.updateEveningShift(date, caToiDTO);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update evening shift successfully!", caToi);
+    }
+
+    @PostMapping("/schedule")
+    public ResponseData<?> shiftSchedule() {
+        iXepCaService.autoScheduleShift();
+        return new ResponseData<>(HttpStatus.CREATED.value(), "Auto schedule shifts successfully");
     }
 
 }

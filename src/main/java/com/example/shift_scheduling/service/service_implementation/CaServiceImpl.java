@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.shift_scheduling.dto.request.CaChieuDTO;
 import com.example.shift_scheduling.dto.request.CaSangDTO;
@@ -16,6 +17,7 @@ import com.example.shift_scheduling.entity.CaChieu;
 import com.example.shift_scheduling.entity.CaSang;
 import com.example.shift_scheduling.entity.CaToi;
 import com.example.shift_scheduling.entity.ChiTietMon;
+import com.example.shift_scheduling.entity.ChiTietMonId;
 import com.example.shift_scheduling.entity.MonAn;
 import com.example.shift_scheduling.repository.CaChieuRepository;
 import com.example.shift_scheduling.repository.CaRepository;
@@ -31,6 +33,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -41,6 +46,9 @@ public class CaServiceImpl implements ICaService {
     private final CaSangRepository caSangRepository;
     private final CaChieuRepository caChieuRepository;
     private final CaToiRepository caToiRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public List<Ca> getShiftTemplateJSon() {
@@ -57,10 +65,19 @@ public class CaServiceImpl implements ICaService {
     }
 
     @Override
+    @Transactional
     public void autoGenerateShift(LocalDate date, Integer dayNums) {
         LocalDate maxDate = caRepository.findMaxDate();
-        if (date.isBefore(maxDate) || date.isAfter(maxDate.plusDays(1))) {
-            throw new RuntimeException("Ngay bat dau phai la: " + maxDate.plusDays(1));
+        if (maxDate != null) {
+            if (date.isBefore(maxDate) || date.isAfter(maxDate.plusDays(1))) {
+                throw new RuntimeException("Ngay bat dau phai la: " + maxDate.plusDays(1));
+            }
+        }
+        else {
+            LocalDate today = LocalDate.now();
+            if (!date.isEqual(today)) {
+                throw new RuntimeException("Ngay bat dau phai la: " + today);
+            }
         }
         List<Ca> MauCa = getShiftTemplateJSon();
         List<Ca> autoGenerate = new ArrayList<>();
@@ -122,18 +139,25 @@ public class CaServiceImpl implements ICaService {
                     .build();
         }
         caRepository.save(saveShift);
+        entityManager.flush();
+        entityManager.clear();
         if (ca.getChiTietMon() != null) {
             List<ChiTietMon> chiTietMons = new ArrayList<>();
             for (ChiTietMon ct : ca.getChiTietMon()) {
                 Integer maMonAn = ct.getMaMonAn();
                 MonAn monAn = iMonAnService.getFoodById(maMonAn);
 
+                ChiTietMonId chiTietMonId = new ChiTietMonId();
+                chiTietMonId.setFoodId(maMonAn);
+                chiTietMonId.setShiftId(saveShift.getId());
+
                 ChiTietMon chiTietMon = ChiTietMon.builder()
                         .ca(saveShift)
                         .monAn(monAn)
                         .soLuong(ct.getSoLuong())
+                        .id(chiTietMonId)
                         .build();
-
+                log.info(">>>>>>>>>>>>>>>>>: " + chiTietMon);
                 chiTietMons.add(chiTietMon);
             }
 
@@ -189,15 +213,24 @@ public class CaServiceImpl implements ICaService {
                 List<ChiTietMon> chiTietMons = new ArrayList<>();
                 for (ChiTietMon ct : caSangDTO.getChiTietMon()) {
                     Integer maMonAn = ct.getMaMonAn();
-                    MonAn monAn = iMonAnService.getFoodById(maMonAn);
+                    ChiTietMonId chiTietMonId = new ChiTietMonId();
+                    chiTietMonId.setFoodId(maMonAn);
+                    chiTietMonId.setShiftId(caSang.getId());
+                    if (chiTietMonRepository.findById(chiTietMonId).isPresent()) {
+                        MonAn monAn = iMonAnService.getFoodById(maMonAn);
 
-                    ChiTietMon chiTietMon = ChiTietMon.builder()
-                            .ca(caSang)
-                            .monAn(monAn)
-                            .soLuong(ct.getSoLuong())
-                            .build();
+                        ChiTietMon chiTietMon = ChiTietMon.builder()
+                                .ca(caSang)
+                                .monAn(monAn)
+                                .soLuong(ct.getSoLuong())
+                                .id(chiTietMonId)
+                                .build();
 
-                    chiTietMons.add(chiTietMon);
+                        chiTietMons.add(chiTietMon);
+                    } else {
+                        throw new EntityNotFoundException("FoodId not found in DetailedShiftFood");
+                    }
+
                 }
 
                 chiTietMonRepository.saveAll(chiTietMons);
@@ -227,15 +260,24 @@ public class CaServiceImpl implements ICaService {
                 List<ChiTietMon> chiTietMons = new ArrayList<>();
                 for (ChiTietMon ct : caChieuDTO.getChiTietMon()) {
                     Integer maMonAn = ct.getMaMonAn();
-                    MonAn monAn = iMonAnService.getFoodById(maMonAn);
+                    ChiTietMonId chiTietMonId = new ChiTietMonId();
+                    chiTietMonId.setFoodId(maMonAn);
+                    chiTietMonId.setShiftId(caChieu.getId());
+                    if (chiTietMonRepository.findById(chiTietMonId) != null) {
+                        MonAn monAn = iMonAnService.getFoodById(maMonAn);
 
-                    ChiTietMon chiTietMon = ChiTietMon.builder()
-                            .ca(caChieu)
-                            .monAn(monAn)
-                            .soLuong(ct.getSoLuong())
-                            .build();
+                        ChiTietMon chiTietMon = ChiTietMon.builder()
+                                .ca(caChieu)
+                                .monAn(monAn)
+                                .soLuong(ct.getSoLuong())
+                                .id(chiTietMonId)
+                                .build();
 
-                    chiTietMons.add(chiTietMon);
+                        chiTietMons.add(chiTietMon);
+                    } else {
+                        throw new EntityNotFoundException("FoodId not found in DetailedShiftFood");
+                    }
+
                 }
 
                 chiTietMonRepository.saveAll(chiTietMons);
@@ -262,15 +304,24 @@ public class CaServiceImpl implements ICaService {
                 List<ChiTietMon> chiTietMons = new ArrayList<>();
                 for (ChiTietMon ct : caToiDTO.getChiTietMon()) {
                     Integer maMonAn = ct.getMaMonAn();
-                    MonAn monAn = iMonAnService.getFoodById(maMonAn);
+                    ChiTietMonId chiTietMonId = new ChiTietMonId();
+                    chiTietMonId.setFoodId(maMonAn);
+                    chiTietMonId.setShiftId(caToi.getId());
+                    if (chiTietMonRepository.findById(chiTietMonId) != null) {
+                        MonAn monAn = iMonAnService.getFoodById(maMonAn);
 
-                    ChiTietMon chiTietMon = ChiTietMon.builder()
-                            .ca(caToi)
-                            .monAn(monAn)
-                            .soLuong(ct.getSoLuong())
-                            .build();
+                        ChiTietMon chiTietMon = ChiTietMon.builder()
+                                .ca(caToi)
+                                .monAn(monAn)
+                                .soLuong(ct.getSoLuong())
+                                .id(chiTietMonId)
+                                .build();
 
-                    chiTietMons.add(chiTietMon);
+                        chiTietMons.add(chiTietMon);
+                    } else {
+                        throw new EntityNotFoundException("FoodId not found in DetailedShiftFood");
+                    }
+
                 }
 
                 chiTietMonRepository.saveAll(chiTietMons);

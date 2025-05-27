@@ -1,5 +1,8 @@
 package com.example.shift_scheduling.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.shift_scheduling.util.Gender;
 import com.example.shift_scheduling.util.LoaiNV;
 import jakarta.persistence.*;
@@ -45,4 +48,14 @@ public class NhanVien {
         this.luongCB = luongCB;
         this.gioiTinh = gioiTinh;
     }
+    
+    @OneToMany(mappedBy = "nhanVien", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChiTietCa> dsCaLamViec = new ArrayList<>();
+
+    // public Integer getCaTrongTuan() {
+    //     if (dsCaLamViec != null) {
+    //         dsCaLamViec.stream()
+    //                 .filter(null)
+    //     }
+    // }
 }

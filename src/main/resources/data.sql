@@ -1,10 +1,21 @@
 INSERT INTO Staff (staffName, gender, address, phone, staffType, level, english, exp, baseSalary) VALUES
-('Nguyen Van A', 'MALE', 'Hanoi', '0909123456', 'DAUBEP', 5, TRUE, 10, 350000),
-('Tran Thi B', 'FEMALE', 'HCM', '0912345678', 'PHUCVU', 2, TRUE, 3, 200000),
-('Le Van C', 'MALE', 'Da Nang', '0923456789', 'LETAN', 3, FALSE, 4, 250000),
-('Pham Thi D', 'FEMALE', 'Hue', '0934567890', 'DAUBEP', 4, TRUE, 8, 350000),
-('Hoang Van E', 'MALE', 'Can Tho', '0945678901', 'PHUCVU', 1, FALSE, 2, 200000);
-
+('Nguyen Van A', 'MALE', 'Hanoi', '0909123456', 'DAUBEP', NULL, NULL, 10, 350000),
+('Pham Thi D', 'FEMALE', 'Hue', '0934567890', 'DAUBEP', NULL, NULL, 8, 350000),
+('Nguyen Van F', 'MALE', 'Hanoi', '0909193456', 'DAUBEP', NULL, NULL, 10, 350000),
+('Nguyen Van G', 'MALE', 'HaiPhong', '0906123456', 'DAUBEP', NULL, NULL, 10, 350000),
+('Nguyen Van H', 'MALE', 'NamDinh', '0919123456', 'DAUBEP', NULL, NULL, 10, 350000),
+('Nguyen Van I', 'MALE', 'PhuYen', '0909113456', 'DAUBEP', NULL, NULL, 10, 350000),
+('Nguyen Van J', 'MALE', 'Hanoi', '0909223456', 'DAUBEP', NULL, NULL, 10, 350000),
+('Le Van C', 'MALE', 'Da Nang', '0933456789', 'LETAN', NULL, FALSE, NULL, 250000),
+('Le Thi D', 'FEMALE', 'Da Nang', '0943456789', 'LETAN', NULL, TRUE, NULL, 250000),
+('Le Thi E', 'FEMALE', 'Da Nang', '0953456789', 'LETAN', NULL, TRUE, NULL, 250000),
+('Le Thi F', 'FEMALE', 'Da Nang', '0963456789', 'LETAN', NULL, FALSE, NULL, 250000),
+('Le Thi G', 'FEMALE', 'Da Nang', '0973456789', 'LETAN', NULL, FALSE, NULL, 250000),
+('Hoang Van E', 'MALE', 'PhuYen', '0855678901', 'PHUCVU', 1, NULL, NULL, 200000),
+('Hoang Van F', 'MALE', 'Phu Tho', '0945678901', 'PHUCVU', 1, NULL, NULL, 200000),
+('Hoang Van G', 'MALE', 'Can Tho', '0915678901', 'PHUCVU', 1, NULL, NULL, 200000),
+('Hoang Van H', 'MALE', 'Can Tho', '0915678801', 'PHUCVU', 1, NULL, NULL, 200000),
+('Tran Thi B', 'FEMALE', 'HCM', '0910345678', 'PHUCVU', 2, TRUE, NULL, 200000);
 
 INSERT INTO Salary (salaryId, staffId, month, year, salary) VALUES
 (1, 1, 5, 2025, 0),
@@ -38,6 +49,10 @@ INSERT INTO Food (foodName, foodType, price, description, cookingTime, foodStatu
 ('Kimchi', 'MON_HAN', 50000, 'Kimchi cay Hàn Quốc', 10, TRUE),
 ('Sushi', 'MON_NHAT', 120000, 'Sushi cá hồi', 25, TRUE),
 ('Bún bò Huế', 'MON_VIET', 70000, 'Đặc sản Huế', 30, TRUE),
+('Chuột đồng nướng', 'MON_NUONG', 70000, 'Chuột nuôi ngoài đồng', 30, TRUE),
+('Lẩu Tứ Xuyên', 'MON_TRUNG', 70000, 'Siêu cay không thể tả', 30, TRUE),
+('Pana cotta', 'TRANG_MIENG_AU', 70000, 'Ăn ngon lắm', 30, TRUE),
+('Trái cây nhiệt đới', 'TRANG_MIENG_A', 70000, 'Ngon ngọt giải khát', 30, TRUE),=
 ('Đậu hũ chiên', 'MON_CHAY', 40000, 'Món chay nhẹ nhàng', 15, TRUE);
 
 INSERT INTO DetailedFoodType (foodType, foodTypeName) VALUES
@@ -48,15 +63,30 @@ INSERT INTO DetailedFoodType (foodType, foodTypeName) VALUES
 ('MON_TRUNG', 'Món Trung'),
 ('MON_CHAY', 'Món Chay'),
 ('MON_NUONG', 'Món Nướng'),
-('TRANG_MIEN_AU', 'Tráng miệng âu'),
-('TRANG_MIEN_A', 'Tráng miệng á');
+('TRANG_MIENG_AU', 'Tráng miệng âu'),
+('TRANG_MIENG_A', 'Tráng miệng á');
 
 INSERT INTO DetailedStaffFood (staffId, foodType) VALUES
 (1, 'MON_AU'),
 (1, 'MON_VIET'),
-(4, 'MON_HAN'),
+
+(2, 'MON_HAN'),
+(2, 'MON_CHAY'),
+
+(3, 'MON_HAN'),
+(3, 'MON_NHAT'),
+
+(4, 'MON_AU'),
 (4, 'MON_CHAY'),
-(2, null);
+
+(5, 'MON_CHAY'),
+(5, 'MON_VIET'),
+
+(6, 'MON_TRUNG'),
+(6, 'MON_NUONG'),
+
+(7, 'TRANG_MIENG_AU'),
+(7, 'TRANG_MIENG_A');
 
 INSERT INTO DetailedShiftFood (foodId, shiftId, quantity) VALUES
 (1, 1, 10),

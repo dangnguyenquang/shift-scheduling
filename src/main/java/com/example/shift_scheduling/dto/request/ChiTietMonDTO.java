@@ -12,4 +12,5 @@ import lombok.Setter;
 public class ChiTietMonDTO {
     private Integer soLuong;
     private Integer maMonAn;
+    private String tenMonAn;
 }

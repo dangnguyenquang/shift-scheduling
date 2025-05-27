@@ -37,7 +37,4 @@ public interface ICaService {
     public CaChieu updateAfternoonShift(LocalDate date, CaChieuDTO caChieuDTO );
 
     public CaToi updateEveningShift(LocalDate date, CaToiDTO caToiDTO);
-
-    
-
 }
