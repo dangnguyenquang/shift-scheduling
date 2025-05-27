@@ -195,6 +195,7 @@ public class NhanVienServiceImpl implements INhanVienService {
                 .soDienThoai(staff.getSoDienThoai())
                 .diaChi(staff.getDiaChi())
                 .gioiTinh(staff.getGioiTinh())
+                .loaiNV(staff.getLoaiNV())
                 .build();
     }
 

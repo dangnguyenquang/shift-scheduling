@@ -17,9 +17,9 @@ INSERT INTO Parameter (parameterId, chefBaseSalary, waiterBaseSalary, receptioni
 (1, 350000, 250000, 200000);
 
 
-INSERT INTO Account (id, username, password) VALUES
-(1, 'NguyenQuangDang', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6'),
-(2, 'TruongHoaiBao', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6');
+INSERT INTO Account (id, username, password, role) VALUES
+(1, 'NguyenQuangDang', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6', 'ADMIN'),
+(2, 'TruongHoaiBao', '$2a$10$IsuPi8GuG0/wSmWBNCqbweyXFCIBBith8DaE7EUHzeVRMieX9kTL6', 'MANAGER');
 
 INSERT INTO Shift (shiftTime, shiftTypeCode, chefNums, serveNums, receptNums, timeStart, timeEnd, mealAllowance, buffet, overtimePay, events) VALUES
 ('2025-05-24', 'CASANG', 10, 10, 2, 6, 11, null, null, null, null),
