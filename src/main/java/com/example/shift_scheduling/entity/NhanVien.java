@@ -38,8 +38,8 @@ public class NhanVien {
     @Enumerated(EnumType.STRING)
     private Gender gioiTinh;
 
-    // @Column(name = "staffType", insertable = false, updatable = false)
-    // private LoaiNV loaiNV;
+    @OneToMany(mappedBy = "nhanVien", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChiTietCa> dsCaLamViec = new ArrayList<>();
 
     public NhanVien() {
     }
@@ -51,22 +51,14 @@ public class NhanVien {
         this.luongCB = luongCB;
         this.gioiTinh = gioiTinh;
     }
-    
-    @OneToMany(mappedBy = "nhanVien", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ChiTietCa> dsCaLamViec = new ArrayList<>();
 
-    // public Integer getCaTrongTuan() {
-    //     if (dsCaLamViec != null) {
-    //         dsCaLamViec.stream()
-    //                 .filter(null)
-    //     }
-    // }
-
+    @Transient
     public LoaiNV getLoaiNV() {
-    if (this instanceof DauBep) return LoaiNV.DAUBEP;
-    if (this instanceof LeTan) return LoaiNV.LETAN;
-    if (this instanceof PhucVu) return LoaiNV.PHUCVU;
-    return null;
-}
-
+        return switch (this) {
+            case DauBep dauBep -> LoaiNV.DAUBEP;
+            case LeTan leTan -> LoaiNV.LETAN;
+            case PhucVu phucVu -> LoaiNV.PHUCVU;
+            default -> null;
+        };
+    }
 }
