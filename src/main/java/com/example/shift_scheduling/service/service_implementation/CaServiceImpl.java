@@ -279,13 +279,14 @@ public class CaServiceImpl implements ICaService {
                                 .soLuong(ct.getSoLuong())
                                 .id(chiTietMonId)
                                 .build();
-
+                                
                         chiTietMons.add(chiTietMon);
                     } else {
                         throw new EntityNotFoundException("FoodId not found in DetailedShiftFood");
                     }
-                    chiTietMonRepository.saveAll(chiTietMons);
                     caChieu.setChiTietMon(chiTietMons);
+                    chiTietMonRepository.saveAll(chiTietMons);
+
                 }
             }
             return caChieu;

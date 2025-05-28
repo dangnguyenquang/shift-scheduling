@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.shift_scheduling.entity.ChiTietMon;
 import com.example.shift_scheduling.util.LoaiCa;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -24,10 +25,10 @@ public class CaToiDTO implements Serializable {
     @Min(value = 1, message = "Số lượng lễ tân ít nhất là 1")
     private Integer slLeTan;
 
-    @Min(value = 5, message = "Thời gian bắt đầu phải > 4")
+    @Min(value = 17, message = "Thời gian bắt đầu phải > 16")
     private Double tgBatDau;
 
-    @Min(value = 24, message = "Thời gian kết thúc phải < 24")
+    @Max(value = 24, message = "Thời gian kết thúc phải < 24")
     private Double tgKetThuc;
 
     @Min(value = 0, message = "Phụ cấp tối phải lớn hơn 0")
