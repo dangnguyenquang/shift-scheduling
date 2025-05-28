@@ -32,36 +32,42 @@ import lombok.extern.slf4j.Slf4j;
 public class MonAnController {
     private final IMonAnService iMonAnService;
 
+//    API lấy ra tất cả món ăn
     @GetMapping("/getAll")
     public ResponseData<?> getAllFood() {
         List<MonAn> monAn = this.iMonAnService.getAllFood();
         return new ResponseData<>(HttpStatus.OK.value(), "Get Food Succesfully", monAn);
     }
 
+//    API thêm món ăn mới
     @PostMapping("/addFood")
     public ResponseData<?> addFood(@RequestBody @Valid MonAnDTO request) {
         MonAn monAn = iMonAnService.saveFood(request);
         return new ResponseData<>(HttpStatus.CREATED.value(), "Create food successfully", monAn);
     }
 
+//    API tìm món ăn dựa trên id
     @GetMapping("/{id}")
     public ResponseData<?> findFoodById(@PathVariable Integer id) {
         MonAn monAn = iMonAnService.getFoodById(id);
         return new ResponseData<>(HttpStatus.OK.value(), "Food found", monAn);
     }
 
+//    API cap nhat mon an dua tren id mon an
     @PutMapping("/updateFood/{id}")
     public ResponseData<?> updateFood(@PathVariable Integer id, @RequestBody @Valid MonAnDTO request) {
         MonAn monAn = iMonAnService.updateFood(id, request);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update food successfully", monAn);
     }
 
+//    API xoa mon
     @DeleteMapping("/delete/{id}")
     public ResponseData<?> deleteFood(@PathVariable Integer id) {
         iMonAnService.deleteFood(id);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Delete food successfully");
     }
 
+//    API cap nhat tinh trang mon
     @PatchMapping("/updateStatus/{id}")
     public ResponseData<?> updateStatus(@PathVariable Integer id,
             @RequestParam boolean status) {

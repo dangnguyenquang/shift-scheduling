@@ -19,12 +19,14 @@ public class ThamSoController {
         this.thamSoServiceImpl = thamSoServiceImpl;
     }
 
+    //    API lay ra tham so
     @GetMapping
     public ResponseData<ThamSoDTO> getThamSo() {
         ThamSoDTO dto = thamSoServiceImpl.getFirstThamSo();
         return new ResponseData<>(HttpStatus.OK.value(), "Lấy tham số thành công", dto);
     }
 
+    //    API cap nhat tham so
     @PutMapping
     public ResponseData<ThamSoDTO> updateThamSo(@Valid @RequestBody ThamSoDTO dto) {
         ThamSoDTO updated = thamSoServiceImpl.updateFirstThamSo(dto);
