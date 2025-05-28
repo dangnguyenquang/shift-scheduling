@@ -35,9 +35,6 @@ public class NhanVien {
     @Enumerated(EnumType.STRING)
     private Gender gioiTinh;
 
-    @Column(name = "staffType", insertable = false, updatable = false)
-    private LoaiNV loaiNV;
-
     public NhanVien() {
     }
 
@@ -47,5 +44,15 @@ public class NhanVien {
         this.diaChi = diaChi;
         this.luongCB = luongCB;
         this.gioiTinh = gioiTinh;
+    }
+
+    @Transient
+    public LoaiNV getLoaiNV() {
+        return switch (this) {
+            case DauBep dauBep -> LoaiNV.DAUBEP;
+            case LeTan leTan -> LoaiNV.LETAN;
+            case PhucVu phucVu -> LoaiNV.PHUCVU;
+            default -> null;
+        };
     }
 }
