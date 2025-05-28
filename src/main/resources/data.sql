@@ -101,22 +101,3 @@ INSERT INTO Feedback (feedbackCode, shiftId, staffId, rate, details) VALUES
 (2, 2, 2, 4, 'Tốt'),
 (3, 3, 3, 2, 'Cần cải thiện');
 
-
-INSERT INTO TableType ( tbTypeName, seats) VALUES
-('Bàn 2 người', 2),
-('Bàn 4 người', 4),
-('Bàn 6 người', 6),
-('Bàn VIP', 10),
-('Bàn gia đình', 8);
-
-INSERT INTO `DiningTable` (tableTypeId) VALUES
-(1),
-(2),
-(2);
-
-
-INSERT INTO DetailedTable (tableId, shiftId, customers) VALUES
-(1, 1, 2),
-(2, 1, 4),
-(3, 2, 3);
-

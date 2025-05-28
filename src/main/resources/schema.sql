@@ -135,24 +135,3 @@ CREATE TABLE Feedback (
     FOREIGN KEY (staffId) REFERENCES Staff(staffId)
 );
 
-CREATE TABLE TableType (
-    tableTypeId INT AUTO_INCREMENT PRIMARY KEY,
-    tbTypeName VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
-    seats INT
-);
-
-CREATE TABLE DiningTable (
-    tableId INT AUTO_INCREMENT PRIMARY KEY,
-    tableTypeId INT,
-    FOREIGN KEY (tableTypeId) REFERENCES TableType(tableTypeId)
-);
-
-CREATE TABLE DetailedTable (
-    tableId INT,
-    shiftId INT,
-    customers INT,
-    PRIMARY KEY (tableId, shiftId),
-    FOREIGN KEY (tableId) REFERENCES DiningTable(tableId),
-    FOREIGN KEY (shiftId) REFERENCES Shift(shiftId)
-);
-

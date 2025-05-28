@@ -39,7 +39,7 @@ public class MonAnController {
     }
 
     @PostMapping("/addFood")
-    public ResponseData<?> addFood(@RequestBody MonAnDTO request) {
+    public ResponseData<?> addFood(@RequestBody @Valid MonAnDTO request) {
         MonAn monAn = iMonAnService.saveFood(request);
         return new ResponseData<>(HttpStatus.CREATED.value(), "Create food successfully", monAn);
     }

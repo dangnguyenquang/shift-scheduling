@@ -38,8 +38,8 @@ public class NhanVien {
     @Enumerated(EnumType.STRING)
     private Gender gioiTinh;
 
-    @Column(name = "staffType", insertable = false, updatable = false)
-    private LoaiNV loaiNV;
+    // @Column(name = "staffType", insertable = false, updatable = false)
+    // private LoaiNV loaiNV;
 
     public NhanVien() {
     }
@@ -61,4 +61,12 @@ public class NhanVien {
     //                 .filter(null)
     //     }
     // }
+
+    public LoaiNV getLoaiNV() {
+    if (this instanceof DauBep) return LoaiNV.DAUBEP;
+    if (this instanceof LeTan) return LoaiNV.LETAN;
+    if (this instanceof PhucVu) return LoaiNV.PHUCVU;
+    return null;
+}
+
 }

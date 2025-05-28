@@ -14,4 +14,5 @@ import com.example.shift_scheduling.util.TrangThaiXepCa;
 @Repository
 public interface ChiTietCaRepository extends JpaRepository<ChiTietCa, ChiTietCaId> {
     List<ChiTietCa> findByCa_NgayCongBetweenAndTtXepCa(LocalDate start, LocalDate end, TrangThaiXepCa tt);
+    List<ChiTietCa> findByTtXepCa(TrangThaiXepCa trangThaiXepCa);
 }

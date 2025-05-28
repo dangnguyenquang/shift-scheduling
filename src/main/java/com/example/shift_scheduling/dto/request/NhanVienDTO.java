@@ -4,6 +4,7 @@ import com.example.shift_scheduling.dto.validator.PhoneNumber;
 import com.example.shift_scheduling.util.Gender;
 import com.example.shift_scheduling.util.LoaiNV;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.io.Serializable;
@@ -30,5 +31,6 @@ public class NhanVienDTO implements Serializable {
     @PhoneNumber(message = "Số điện thoại không hợp lệ")
     private String soDienThoai;
 
+    @NotNull(message = "Loại nhân viên không được trống hoặc không hợp lệ")
     private LoaiNV loaiNV;
 }

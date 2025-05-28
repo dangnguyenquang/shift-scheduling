@@ -24,7 +24,6 @@ public class DauBep extends NhanVien {
             joinColumns = @JoinColumn(name = "staffId")
     )
     @Enumerated(EnumType.STRING)
-
     @Column(name = "foodType")
     private Set<LoaiMon> dsLoaiMonAn;
 

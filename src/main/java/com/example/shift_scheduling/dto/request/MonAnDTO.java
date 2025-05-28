@@ -22,12 +22,13 @@ public class MonAnDTO implements Serializable {
     @NotBlank(message = "Ten mon an khong duoc de trong")
     private String tenMonAn;
 
+    @NotNull(message = "Loai mon khong duoc null")
     public LoaiMon loaiMon;
 
     @Min(0)
     private double gia;
 
-    @NotNull(message = "Mo ta khong duoc null")
+    @NotBlank(message = "Mo ta khong duoc de trong")
     private String moTa;
 
     @Min(value = 1, message = "Thoi gian nau phai lon hon 1phut")
