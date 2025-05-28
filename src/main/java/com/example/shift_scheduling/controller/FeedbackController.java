@@ -23,18 +23,21 @@ public class FeedbackController {
         this.feedbackImpl = feedbackImpl;
     }
 
+//    API tạo feedback
     @PostMapping("/")
     public ResponseData<Integer> addFeedback(@Valid @RequestBody FeedbackDTO feedback) {
         int result = feedbackImpl.addFeedback(feedback);
         return new ResponseData<>(HttpStatus.CREATED.value(), "Feedback added successfully", result);
     }
 
+//    API lấy tất cả feedback
     @GetMapping("/")
     public ResponseData<?> getAllFeedbacks() {
         List<FeedbackDTO> list = feedbackImpl.getAllFeedbacks();
         return new ResponseData<>(HttpStatus.OK.value(), "Get feedback list successfully", list);
     }
 
+//    API lấy feedback dự trên id feedback
     @GetMapping("/{id}")
     public ResponseData<?> getFeedbackById(@PathVariable Integer id) {
         FeedbackDTO dto = feedbackImpl.getFeedbackById(id);

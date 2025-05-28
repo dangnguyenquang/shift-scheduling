@@ -42,48 +42,56 @@ public class CaController {
     private final IXepCaService iXepCaService;
     private final IChiTietCaService iChiTietCaService;
 
+//    API tự động tạo ca mới
     @PostMapping("/auto-generate")
     public ResponseData<?> autoGenerateShifts(@RequestParam @Valid LocalDate date, @RequestParam Integer days) {
         iCaService.autoGenerateShift(date, days);
         return new ResponseData<>(HttpStatus.CREATED.value(), "Auto generate successfully!");
     }
 
+//    API lấy tất cả các ca
     @GetMapping("/getAll")
     public ResponseData<?> getAllShifts() {
         List<Ca> ds = iCaService.getAllShifts();
         return new ResponseData<>(HttpStatus.OK.value(), "Get shifts successfully!", ds);
     }
 
+//    API xoá ca dựa trên id
     @DeleteMapping("/delete/{id}")
     public ResponseData<?> deleteShift(@PathVariable Integer id) {
         iCaService.deleteShift(id);
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(), "Delete shifts successfully!");
     }
 
+//    API cập nhật ca sáng
     @PutMapping("/update/morning")
     public ResponseData<?> updateMorningShift(@RequestParam LocalDate date, @RequestBody @Valid CaSangDTO caSangDTO) {
         CaSang caSang = iCaService.updateMorningShift(date, caSangDTO);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update morning shift successfully!", caSang);
     }
 
+//    API cập nhật ca chiều
     @PutMapping("/update/afternoon")
     public ResponseData<?> updateAfternoonShift(@RequestParam LocalDate date, @RequestBody @Valid CaChieuDTO caChieuDTO) {
         CaChieu caChieu = iCaService.updateAfternoonShift(date, caChieuDTO);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update afternoon shift successfully!", caChieu);
     }
 
+//    API cập nhật ca tối
     @PutMapping("/update/evening")
     public ResponseData<?> updatEeveningShift(@RequestParam LocalDate date, @RequestBody @Valid CaToiDTO caToiDTO) {
         CaToi caToi = iCaService.updateEveningShift(date, caToiDTO);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update evening shift successfully!", caToi);
     }
 
+//    API xếp ca
     @PostMapping("/schedule")
     public ResponseData<?> shiftSchedule() {
         iXepCaService.autoScheduleShift();
         return new ResponseData<>(HttpStatus.CREATED.value(), "Auto schedule shifts successfully");
     }
 
+//    API lây chi tiết tất cả các ca
     @GetMapping("/getAll-detailedShifts")
     public ResponseData<?> getAllDetaiedShifts() {
         List<ChiTietCaDTO> ds = iChiTietCaService.getAllDetailedShifts();
