@@ -2,19 +2,17 @@ package com.example.shift_scheduling.service.service_implementation;
 
 import com.example.shift_scheduling.dto.request.CaThongKeDTO;
 import com.example.shift_scheduling.dto.request.LuongDTO;
-import com.example.shift_scheduling.dto.request.NhanVienDTO;
-import com.example.shift_scheduling.entity.DauBep;
 import com.example.shift_scheduling.entity.Luong;
 import com.example.shift_scheduling.entity.NhanVien;
 import com.example.shift_scheduling.repository.LuongRepository;
+import com.example.shift_scheduling.repository.NhanVienRepository;
 import com.example.shift_scheduling.service.ILuongService;
-import com.example.shift_scheduling.util.LoaiNV;
-import jakarta.persistence.EntityNotFoundException;
+import com.example.shift_scheduling.strategy.ISalaryStrategy;
+import com.example.shift_scheduling.strategy.SalaryStrategyFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 
 @Service
@@ -24,30 +22,17 @@ public class LuongServiceImpl implements ILuongService {
     private final LuongRepository luongRepository;
     private final CaServiceImpl caServiceImpl;
     private final NhanVienServiceImpl nhanVienService;
+    private final NhanVienRepository nhanVienRepository;
 
-    @Override
     public void calculateSalary(int month, int year) {
         List<CaThongKeDTO> thongKeList = caServiceImpl.thongKeCa(month, year);
 
         for (CaThongKeDTO thongKe : thongKeList) {
-            NhanVienDTO nhanVien = nhanVienService.getStaffById(thongKe.getEmployeeId());
+            NhanVien nhanVien = nhanVienRepository.findById(thongKe.getEmployeeId()).orElseThrow();
 
-            float luongCB = nhanVien.getLuongCB();
-            float tongLuong = 0.0f;
+            ISalaryStrategy strategy = SalaryStrategyFactory.getStrategy(nhanVien);
+            float tongLuong = strategy.calculateSalary(nhanVien, thongKe);
 
-            tongLuong += luongCB * (thongKe.getCaSang() + thongKe.getCaChieu() + thongKe.getCaToi());
-
-            tongLuong += luongCB * 0.1f * thongKe.getCaToi();
-
-            if (nhanVien.getLoaiNV() == LoaiNV.DAUBEP) {
-                tongLuong += luongCB * 0.15f * thongKe.getSoBuoiBuffet();
-            }
-
-            if (nhanVien.getLoaiNV() == LoaiNV.PHUCVU|| nhanVien.getLoaiNV() == LoaiNV.LETAN) {
-                tongLuong += luongCB * 0.15f * thongKe.getSoBuoiSuKien();
-            }
-
-            // Ghi vào DB
             Luong luong = Luong.builder()
                     .maNV(nhanVien.getMaNV())
                     .thang(month)
