@@ -27,12 +27,11 @@ CREATE TABLE Account (
 );
 
 CREATE TABLE Salary (
-    salaryId INT,
+    salaryId INT AUTO_INCREMENT PRIMARY KEY,
     staffId INT,
     month INT,
     year INT,
     salary FLOAT,
-    PRIMARY KEY (salaryId),
     FOREIGN KEY (staffId) REFERENCES Staff(staffId)
 );
 

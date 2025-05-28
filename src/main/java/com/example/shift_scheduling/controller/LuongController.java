@@ -19,7 +19,7 @@ public class LuongController {
         this.luongServiceImpl = luongServiceImpl;
     }
 
-    @GetMapping("/calculate")
+    @PostMapping("/calculate")
     public ResponseData<?> calculateSalary(@RequestParam int month, @RequestParam int year) {
         luongServiceImpl.calculateSalary(month, year);
         return new ResponseData<>(HttpStatus.OK.value(), "Salary calculation completed", null);

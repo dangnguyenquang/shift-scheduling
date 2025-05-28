@@ -1,3 +1,6 @@
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
+
 INSERT INTO Staff (staffName, gender, address, phone, staffType, level, english, exp, baseSalary) VALUES
 ('Nguyễn Văn A', 'MALE', 'Hà Nội', '0909123456', 'DAUBEP', NULL, NULL, 10, 350000),
 ('Phạm Thị D', 'FEMALE', 'Huế', '0934567890', 'DAUBEP', NULL, NULL, 8, 350000),
@@ -16,13 +19,6 @@ INSERT INTO Staff (staffName, gender, address, phone, staffType, level, english,
 ('Hoàng Văn G', 'MALE', 'Cần Thơ', '0915678901', 'PHUCVU', 1, NULL, NULL, 200000),
 ('Hoàng Văn H', 'MALE', 'Cần Thơ', '0915678801', 'PHUCVU', 1, NULL, NULL, 200000),
 ('Trần Thị B', 'FEMALE', 'TP. Hồ Chí Minh', '0910345678', 'PHUCVU', 2, TRUE, NULL, 200000);
-
-INSERT INTO Salary (salaryId, staffId, month, year, salary) VALUES
-(1, 1, 5, 2025, 0),
-(2, 2, 5, 2025, 0),
-(3, 3, 5, 2025, 0),
-(4, 4, 5, 2025, 0),
-(5, 5, 5, 2025, 0);
 
 INSERT INTO Parameter (parameterId, chefBaseSalary, waiterBaseSalary, receptionistBaseSalary) VALUES
 (1, 350000, 250000, 200000);
@@ -140,4 +136,3 @@ INSERT INTO Feedback (feedbackCode, shiftId, staffId, rate, details) VALUES
 (1, 1, 1, 5, 'Rất tốt'),
 (2, 2, 2, 4, 'Tốt'),
 (3, 3, 3, 2, 'Cần cải thiện');
-
