@@ -51,7 +51,7 @@ public class MonAnController {
     }
 
     @PutMapping("/updateFood/{id}")
-    public ResponseData<?> updateFood(@PathVariable Integer id, @Valid @RequestBody MonAnDTO request) {
+    public ResponseData<?> updateFood(@PathVariable Integer id, @RequestBody @Valid MonAnDTO request) {
         MonAn monAn = iMonAnService.updateFood(id, request);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update food successfully", monAn);
     }

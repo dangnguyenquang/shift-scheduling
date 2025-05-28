@@ -1,6 +1,5 @@
 package com.example.shift_scheduling.controller;
 
-import java.net.http.HttpClient;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -58,24 +57,23 @@ public class CaController {
     @DeleteMapping("/delete/{id}")
     public ResponseData<?> deleteShift(@PathVariable Integer id) {
         iCaService.deleteShift(id);
-        ;
         return new ResponseData<>(HttpStatus.NO_CONTENT.value(), "Delete shifts successfully!");
     }
 
     @PutMapping("/update/morning")
-    public ResponseData<?> updateMorningShift(@RequestParam LocalDate date, @RequestBody CaSangDTO caSangDTO) {
+    public ResponseData<?> updateMorningShift(@RequestParam LocalDate date, @RequestBody @Valid CaSangDTO caSangDTO) {
         CaSang caSang = iCaService.updateMorningShift(date, caSangDTO);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update morning shift successfully!", caSang);
     }
 
     @PutMapping("/update/afternoon")
-    public ResponseData<?> updateAfternoonShift(@RequestParam LocalDate date, @RequestBody CaChieuDTO caChieuDTO) {
+    public ResponseData<?> updateAfternoonShift(@RequestParam LocalDate date, @RequestBody @Valid CaChieuDTO caChieuDTO) {
         CaChieu caChieu = iCaService.updateAfternoonShift(date, caChieuDTO);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update afternoon shift successfully!", caChieu);
     }
 
     @PutMapping("/update/evening")
-    public ResponseData<?> updatEeveningShift(@RequestParam LocalDate date, @RequestBody CaToiDTO caToiDTO) {
+    public ResponseData<?> updatEeveningShift(@RequestParam LocalDate date, @RequestBody @Valid CaToiDTO caToiDTO) {
         CaToi caToi = iCaService.updateEveningShift(date, caToiDTO);
         return new ResponseData<>(HttpStatus.ACCEPTED.value(), "Update evening shift successfully!", caToi);
     }

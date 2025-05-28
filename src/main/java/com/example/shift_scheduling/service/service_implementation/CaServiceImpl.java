@@ -73,17 +73,17 @@ public class CaServiceImpl implements ICaService {
     @Transactional
     public void autoGenerateShift(LocalDate date, Integer dayNums) {
         if (caRepository.count() == 0) {
-            throw new InvalidDataException("Chua co du lieu.");
+            throw new InvalidDataException("Table is null.");
         }
         LocalDate maxDate = caRepository.findMaxDate();
         if (maxDate != null) {
             if (date.isBefore(maxDate) || date.isAfter(maxDate.plusDays(1))) {
-                throw new InvalidDataException("Ngay bat dau phai la: " + maxDate.plusDays(1));
+                throw new InvalidDataException("Date must be: " + maxDate.plusDays(1));
             }
         } else {
             LocalDate today = LocalDate.now();
             if (!date.isEqual(today)) {
-                throw new InvalidDataException("Ngay bat dau phai la: " + today);
+                throw new InvalidDataException("Date must be: " + today);
             }
         }
         List<Ca> MauCa = getShiftTemplateJSon();
@@ -95,7 +95,7 @@ public class CaServiceImpl implements ICaService {
             for (Ca ca : MauCa) {
                 if (caRepository.existsByNgayCongAndLoaiCa(current, getTypeCode(ca))) {
                     throw new InvalidDataException(
-                            getTypeCode(ca) + " ngay " + current + " da ton tai");
+                            getTypeCode(ca) + " Date " + current + "was exist");
                 }
                 Ca saveShift = saveShift(ca);
                 saveShift.setNgayCong(current);

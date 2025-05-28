@@ -39,7 +39,7 @@ public class AuthController {
         try {
             userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         } catch (UsernameNotFoundException ex) {
-            ResponseData<?> response = new ResponseData<>(HttpStatus.NOT_FOUND.value(), "Tài khoản chưa được tạo",
+            ResponseData<?> response = new ResponseData<>(HttpStatus.NOT_FOUND.value(), "Account not found in Database",
                     null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }

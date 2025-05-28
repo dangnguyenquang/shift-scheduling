@@ -8,12 +8,10 @@ import org.springframework.stereotype.Service;
 import com.example.shift_scheduling.dto.request.CaChieuDTO;
 import com.example.shift_scheduling.dto.request.CaSangDTO;
 import com.example.shift_scheduling.dto.request.CaToiDTO;
-import com.example.shift_scheduling.dto.request.ChiTietCaDTO;
 import com.example.shift_scheduling.entity.Ca;
 import com.example.shift_scheduling.entity.CaChieu;
 import com.example.shift_scheduling.entity.CaSang;
 import com.example.shift_scheduling.entity.CaToi;
-import com.example.shift_scheduling.entity.ChiTietCa;
 import com.example.shift_scheduling.util.LoaiCa;
 
 @Service

@@ -1,7 +1,6 @@
 package com.example.shift_scheduling.service.service_implementation;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +45,7 @@ public class XepCaServiceimpl implements IXepCaService {
     public void autoScheduleShift() {
         List<ChiTietCa> chuaXep = chiTietCaRepository.findByTtXepCa(TrangThaiXepCa.CHUAXEP);
 
+        // Lọc chi tiết ca đăng ký theo ca
         Map<Ca, List<ChiTietCa>> caDangKy = chuaXep.stream()
                 .collect(Collectors.groupingBy(ChiTietCa::getCa));
 
@@ -61,6 +61,7 @@ public class XepCaServiceimpl implements IXepCaService {
 
     @Override
     public void handleScheduleShift(Ca ca, List<ChiTietCa> dsDangKy) {
+        // Lọc chi tiết ca đăng kí theo Nhân Viên
         List<ChiTietCa> dsDauBep = dsDangKy.stream()
                 .filter(e -> e.getNhanVien() instanceof DauBep)
                 .collect(Collectors.toList());
@@ -81,7 +82,7 @@ public class XepCaServiceimpl implements IXepCaService {
 
     @Override
     public void scheduleStaff(Ca ca, List<ChiTietCa> dsDangKy, Integer soLuong) {
-
+        // Chọn danh sách ưu tiên theo yêu cầu
         List<ChiTietCa> dsUuTien = dsDangKy.stream()
                 .filter(c -> {
                     NhanVien nv = c.getNhanVien();
@@ -124,7 +125,8 @@ public class XepCaServiceimpl implements IXepCaService {
             dsNhanVien.addAll(dsUuTien);
             dsNhanVien.addAll(dsKhongUuTien);
         }
-
+        
+        //Set trạng thái là THANHCONG
         int daChon = 0;
         for (ChiTietCa ctc : dsNhanVien) {
             if (daChon >= soLuong)

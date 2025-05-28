@@ -15,7 +15,7 @@ import lombok.Setter;
 @Table(name = "Staff")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "staffType", discriminatorType = DiscriminatorType.STRING)
-public class NhanVien {
+public abstract class NhanVien {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
