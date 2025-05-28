@@ -1,9 +1,6 @@
 package com.example.shift_scheduling.service.service_implementation;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
@@ -22,6 +19,7 @@ import com.example.shift_scheduling.entity.ChiTietMon;
 import com.example.shift_scheduling.entity.ChiTietMonId;
 import com.example.shift_scheduling.entity.MonAn;
 import com.example.shift_scheduling.entity.NhanVien;
+import com.example.shift_scheduling.exception.InvalidDataException;
 import com.example.shift_scheduling.repository.CaChieuRepository;
 import com.example.shift_scheduling.repository.CaRepository;
 import com.example.shift_scheduling.repository.CaSangRepository;
@@ -36,10 +34,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.*;
 
 import jakarta.persistence.EntityManager;
@@ -77,16 +72,18 @@ public class CaServiceImpl implements ICaService {
     @Override
     @Transactional
     public void autoGenerateShift(LocalDate date, Integer dayNums) {
+        if (caRepository.count() == 0) {
+            throw new InvalidDataException("Chua co du lieu.");
+        }
         LocalDate maxDate = caRepository.findMaxDate();
         if (maxDate != null) {
             if (date.isBefore(maxDate) || date.isAfter(maxDate.plusDays(1))) {
-                throw new RuntimeException("Ngay bat dau phai la: " + maxDate.plusDays(1));
+                throw new InvalidDataException("Ngay bat dau phai la: " + maxDate.plusDays(1));
             }
-        }
-        else {
+        } else {
             LocalDate today = LocalDate.now();
             if (!date.isEqual(today)) {
-                throw new RuntimeException("Ngay bat dau phai la: " + today);
+                throw new InvalidDataException("Ngay bat dau phai la: " + today);
             }
         }
         List<Ca> MauCa = getShiftTemplateJSon();
@@ -97,7 +94,7 @@ public class CaServiceImpl implements ICaService {
 
             for (Ca ca : MauCa) {
                 if (caRepository.existsByNgayCongAndLoaiCa(current, getTypeCode(ca))) {
-                    throw new RuntimeException(
+                    throw new InvalidDataException(
                             getTypeCode(ca) + " ngay " + current + " da ton tai");
                 }
                 Ca saveShift = saveShift(ca);
@@ -273,7 +270,7 @@ public class CaServiceImpl implements ICaService {
                     ChiTietMonId chiTietMonId = new ChiTietMonId();
                     chiTietMonId.setFoodId(maMonAn);
                     chiTietMonId.setShiftId(caChieu.getId());
-                    if (chiTietMonRepository.findById(chiTietMonId) != null) {
+                    if (chiTietMonRepository.findById(chiTietMonId).isPresent()) {
                         MonAn monAn = iMonAnService.getFoodById(maMonAn);
 
                         ChiTietMon chiTietMon = ChiTietMon.builder()
@@ -287,11 +284,9 @@ public class CaServiceImpl implements ICaService {
                     } else {
                         throw new EntityNotFoundException("FoodId not found in DetailedShiftFood");
                     }
-
+                    chiTietMonRepository.saveAll(chiTietMons);
+                    caChieu.setChiTietMon(chiTietMons);
                 }
-
-                chiTietMonRepository.saveAll(chiTietMons);
-                caChieu.setChiTietMon(chiTietMons);
             }
             return caChieu;
         } else {
@@ -317,7 +312,7 @@ public class CaServiceImpl implements ICaService {
                     ChiTietMonId chiTietMonId = new ChiTietMonId();
                     chiTietMonId.setFoodId(maMonAn);
                     chiTietMonId.setShiftId(caToi.getId());
-                    if (chiTietMonRepository.findById(chiTietMonId) != null) {
+                    if (chiTietMonRepository.findById(chiTietMonId).isPresent()) {
                         MonAn monAn = iMonAnService.getFoodById(maMonAn);
 
                         ChiTietMon chiTietMon = ChiTietMon.builder()
@@ -347,7 +342,8 @@ public class CaServiceImpl implements ICaService {
         LocalDate startDate = LocalDate.of(nam, thang, 1);
         LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
 
-        List<ChiTietCa> danhSachChiTietCa = chiTietCaRepository.findByCa_NgayCongBetweenAndTtXepCa(startDate, endDate, TrangThaiXepCa.THANHCONG);
+        List<ChiTietCa> danhSachChiTietCa = chiTietCaRepository.findByCa_NgayCongBetweenAndTtXepCa(startDate, endDate,
+                TrangThaiXepCa.THANHCONG);
 
         Map<Integer, CaThongKeDTO> thongKeTheoNhanVien = new HashMap<>();
 
@@ -355,7 +351,8 @@ public class CaServiceImpl implements ICaService {
             NhanVien nv = chiTietCa.getNhanVien();
             Ca ca = chiTietCa.getCa();
 
-            if (nv == null || ca == null) continue;
+            if (nv == null || ca == null)
+                continue;
 
             int maNV = nv.getMaNV();
 

@@ -18,8 +18,8 @@
     "slLeTan": 1,
     "tgBatDau": 12.0,
     "tgKetThuc": 17.0,
-    "phuCapTrua": "COM_GA",
-    "buffet": "BUFFET_HAISAN",
+    "phuCapTrua": "Cơm gà",
+    "buffet": "Buffet Lẩu",
     "chiTietMon": [
       { "maMonAn": 2, "soLuong": 20 },
       { "maMonAn": 3, "soLuong": 20 }
@@ -33,7 +33,7 @@
     "tgBatDau": 17.0,
     "tgKetThuc": 23.0,
     "phuCapToi": 30000,
-    "suKien": "Acoustic",
+    "suKien": "Văn nghệ tối",
     "chiTietMon": [
       { "maMonAn": 4, "soLuong": 25 },
       { "maMonAn": 5, "soLuong": 20 }

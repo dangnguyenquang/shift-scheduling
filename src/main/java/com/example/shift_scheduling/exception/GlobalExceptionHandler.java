@@ -22,6 +22,8 @@ import com.example.shift_scheduling.dto.response.ResponseError;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -198,6 +200,19 @@ public class GlobalExceptionHandler {
                                 message = "Số điện thoại đã tồn tại, vui lòng nhập số khác.";
                         } else {
                                 message = "Dữ liệu đã tồn tại và vi phạm ràng buộc unique.";
+                        }
+                }
+                if (rootMessage != null && rootMessage.contains("a foreign key constraint fails")) {
+                        Pattern pattern = Pattern.compile("fails \\(`(.+?)`\\.`(.+?)`, CONSTRAINT `(.+?)` FOREIGN KEY");
+                        Matcher matcher = pattern.matcher(rootMessage);
+                        if (matcher.find()) {
+                                String database = matcher.group(1);
+                                String table = matcher.group(2);
+                                String constraint = matcher.group(3);
+                                message = String.format("Lỗi ràng buộc khóa ngoại (bảng: %s, constraint: %s).",
+                                                table, constraint);
+                        } else {
+                                message = "Thao tác không hợp lệ do ràng buộc khoá ngoại.";
                         }
                 }
 

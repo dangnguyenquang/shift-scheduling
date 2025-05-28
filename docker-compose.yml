@@ -6,14 +6,12 @@ services:
     environment:
       MYSQL_DATABASE: shift_db
       MYSQL_ROOT_PASSWORD: 123456
-
+      secret: ${JWT_SECRET}
     ports:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./db-init:/docker-entrypoint-initdb.d
 volumes:
   mysql-data:
-  
-jwt:
-  secret: ${JWT_SECRET}
 

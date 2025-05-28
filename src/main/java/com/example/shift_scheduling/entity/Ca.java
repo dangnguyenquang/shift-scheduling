@@ -66,5 +66,4 @@ public abstract class Ca {
     @OneToMany(mappedBy = "ca", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ChiTietMon> chiTietMon = new ArrayList<>();
 
-
 }

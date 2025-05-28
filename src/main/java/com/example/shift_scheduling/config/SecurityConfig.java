@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/food/**").hasRole("ADMIN")
                         .requestMatchers("/salary/**").hasRole("ADMIN")
+                        .requestMatchers("/shift/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Dùng
                 .exceptionHandling(ex -> ex

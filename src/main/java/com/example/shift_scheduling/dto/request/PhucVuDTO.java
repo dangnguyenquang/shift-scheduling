@@ -35,7 +35,4 @@ public class PhucVuDTO implements Serializable {
 
     @NotNull(message = "Cấp bậc không được để trống")
     private Integer capBac;
-    
-    // @NotNull(message = "Loại nhân viên không được trống hoặc không hợp lệ")
-    // private LoaiNV loaiNV;
 }

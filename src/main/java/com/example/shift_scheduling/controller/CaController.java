@@ -19,12 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.shift_scheduling.dto.request.CaChieuDTO;
 import com.example.shift_scheduling.dto.request.CaSangDTO;
 import com.example.shift_scheduling.dto.request.CaToiDTO;
+import com.example.shift_scheduling.dto.request.ChiTietCaDTO;
 import com.example.shift_scheduling.dto.response.ResponseData;
 import com.example.shift_scheduling.entity.Ca;
 import com.example.shift_scheduling.entity.CaChieu;
 import com.example.shift_scheduling.entity.CaSang;
 import com.example.shift_scheduling.entity.CaToi;
 import com.example.shift_scheduling.service.ICaService;
+import com.example.shift_scheduling.service.IChiTietCaService;
 import com.example.shift_scheduling.service.IXepCaService;
 
 import jakarta.validation.Valid;
@@ -39,6 +41,7 @@ import lombok.extern.slf4j.Slf4j;
 public class CaController {
     private final ICaService iCaService;
     private final IXepCaService iXepCaService;
+    private final IChiTietCaService iChiTietCaService;
 
     @PostMapping("/auto-generate")
     public ResponseData<?> autoGenerateShifts(@RequestParam @Valid LocalDate date, @RequestParam Integer days) {
@@ -81,6 +84,12 @@ public class CaController {
     public ResponseData<?> shiftSchedule() {
         iXepCaService.autoScheduleShift();
         return new ResponseData<>(HttpStatus.CREATED.value(), "Auto schedule shifts successfully");
+    }
+
+    @GetMapping("/getAll-detailedShifts")
+    public ResponseData<?> getAllDetaiedShifts() {
+        List<ChiTietCaDTO> ds = iChiTietCaService.getAllDetailedShifts();
+        return new ResponseData<>(HttpStatus.OK.value(), "Get shifts successfully!", ds);
     }
 
 }

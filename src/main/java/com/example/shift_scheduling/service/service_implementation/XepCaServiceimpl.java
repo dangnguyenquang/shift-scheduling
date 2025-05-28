@@ -73,9 +73,9 @@ public class XepCaServiceimpl implements IXepCaService {
                 .filter(e -> e.getNhanVien() instanceof LeTan)
                 .collect(Collectors.toList());
 
-        //scheduleStaff(ca, dsDauBep, ca.getSlDauBep());
+        scheduleStaff(ca, dsDauBep, ca.getSlDauBep());
         scheduleStaff(ca, dsPhucVu, ca.getSlPhucVu());
-        //scheduleStaff(ca, dsLeTan, ca.getSlLeTan());
+        scheduleStaff(ca, dsLeTan, ca.getSlLeTan());
 
     }
 
