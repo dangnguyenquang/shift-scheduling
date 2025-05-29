@@ -223,6 +223,7 @@ public class CaServiceImpl implements ICaService {
                     ChiTietMonId chiTietMonId = new ChiTietMonId();
                     chiTietMonId.setFoodId(maMonAn);
                     chiTietMonId.setShiftId(caSang.getId());
+                    
                     if (chiTietMonRepository.findById(chiTietMonId).isPresent()) {
                         MonAn monAn = iMonAnService.getFoodById(maMonAn);
 
@@ -241,7 +242,6 @@ public class CaServiceImpl implements ICaService {
                 }
 
                 chiTietMonRepository.saveAll(chiTietMons);
-                caSang.setChiTietMon(chiTietMons);
             }
             return caSang;
         } else {
@@ -284,7 +284,6 @@ public class CaServiceImpl implements ICaService {
                     } else {
                         throw new EntityNotFoundException("FoodId not found in DetailedShiftFood");
                     }
-                    caChieu.setChiTietMon(chiTietMons);
                     chiTietMonRepository.saveAll(chiTietMons);
 
                 }
@@ -331,7 +330,6 @@ public class CaServiceImpl implements ICaService {
                 }
 
                 chiTietMonRepository.saveAll(chiTietMons);
-                caToi.setChiTietMon(chiTietMons);
             }
             return caToi;
         } else {
